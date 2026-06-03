@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Swipe File — Criativos Escalados</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0e0e0f;
+    --surface: #161617;
+    --surface2: #1e1e20;
+    --border: #2a2a2d;
+    --border2: #3a3a3e;
+    --text: #f0efe8;
+    --muted: #888784;
+    --accent: #c8f060;
+    --accent2: #f0c060;
+    --danger: #f06060;
+    --info: #60b8f0;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── AUTH SCREEN ── */
+  #auth-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  #auth-screen::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(200,240,96,0.07) 0%, transparent 70%);
+    top: -100px; left: -100px;
+    pointer-events: none;
+  }
+  #auth-screen::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(240,192,96,0.05) 0%, transparent 70%);
+    bottom: -80px; right: -80px;
+    pointer-events: none;
+  }
+  .auth-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    width: 380px;
+    max-width: 95vw;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .auth-logo {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+  .auth-tagline {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+  .auth-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .auth-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+  .google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 13px 20px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .google-btn:hover { background: #28282c; border-color: var(--muted); }
+  .google-btn svg { flex-shrink: 0; }
+  .auth-note {
+    margin-top: 1.5rem;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── APP ── */
+  #app { display: none; min-height: 100vh; }
+
+  /* sidebar */
+  .layout { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .logo {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    padding: 0 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+  .logo-sub {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    padding: 0 0.5rem;
+    margin-bottom: 2rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .nav-label {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    margin-bottom: 2px;
+  }
+  .nav-btn:hover { background: var(--surface2); color: var(--text); }
+  .nav-btn.active { background: var(--surface2); color: var(--accent); }
+  .nav-btn .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    flex-shrink: 0;
+  }
+  .nav-btn.active .dot { background: var(--accent); }
+
+  .sidebar-footer { margin-top: auto; }
+  .user-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    background: var(--surface2);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+  .avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #0e0e0f;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .user-name { font-size: 12px; font-weight: 500; color: var(--text); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .logout-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; padding: 2px; transition: color 0.15s; }
+  .logout-btn:hover { color: var(--danger); }
+
+  /* main */
+  .main { flex: 1; padding: 2rem 2rem 4rem; max-width: 1100px; }
+
+  .topbar { display: flex; align-items: center; gap: 12px; margin-bottom: 2rem; flex-wrap: wrap; }
+  .page-title { font-size: 22px; font-weight: 800; flex: 1; letter-spacing: -0.02em; }
+  .count-badge {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .search-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    width: 200px;
+    transition: border-color 0.2s;
+  }
+  .search-bar:focus { outline: none; border-color: var(--border2); }
+  .search-bar::placeholder { color: var(--muted); }
+
+  .add-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--accent);
+    color: #0e0e0f;
+    border: none;
+    padding: 9px 18px;
+    border-radius: var(--radius-sm);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .add-btn:hover { background: #d9ff70; transform: translateY(-1px); }
+
+  /* grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .card:hover { border-color: var(--border2); transform: translateY(-2px); }
+
+  .card-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .thumb-icon { font-size: 32px; color: var(--border2); }
+  .type-badge {
+    position: absolute; top: 8px; left: 8px;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .badge-video { background: rgba(200,240,96,0.15); color: var(--accent); border: 1px solid rgba(200,240,96,0.3); }
+  .badge-image { background: rgba(96,184,240,0.15); color: var(--info); border: 1px solid rgba(96,184,240,0.3); }
+
+  .card-body { padding: 12px 14px 14px; }
+  .card-nicho {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: var(--accent2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .card-copy {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.45;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-cta {
+    display: inline-block;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--surface2);
+    color: var(--muted);
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+  }
+  .card-link {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--info);
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .card-link:hover { text-decoration: underline; }
+  .no-link { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--border2); }
+
+  .card-actions {
+    display: flex; gap: 6px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+  .action-btn {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px;
+    padding: 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .action-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--border2); }
+  .action-btn.del:hover { color: var(--danger); border-color: rgba(240,96,96,0.3); background: rgba(240,96,96,0.08); }
+
+  .empty-state {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--muted);
+  }
+  .empty-icon { font-size: 48px; margin-bottom: 1rem; color: var(--border2); }
+  .empty-state p { font-size: 14px; margin-bottom: 1.5rem; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 480px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.2s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+  .modal-title { font-size: 17px; font-weight: 700; }
+  .close-btn { background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; padding: 4px; border-radius: 6px; transition: all 0.15s; line-height: 1; }
+  .close-btn:hover { background: var(--surface2); color: var(--text); }
+
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 11px; font-family: 'DM Mono', monospace; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 9px 12px;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    transition: border-color 0.2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
+  .field input::placeholder, .field textarea::placeholder { color: var(--muted); }
+  .field textarea { height: 80px; resize: vertical; }
+  .field select option { background: var(--surface2); color: var(--text); }
+
+  .modal-footer { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.5rem; }
+  .btn-cancel {
+    padding: 9px 18px; border-radius: var(--radius-sm);
+    background: transparent; border: 1px solid var(--border2);
+    color: var(--muted); font-family: 'Syne', sans-serif; font-size: 13px;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .btn-cancel:hover { background: var(--surface2); color: var(--text); }
+  .btn-save {
+    padding: 9px 20px; border-radius: var(--radius-sm);
+    background: var(--accent); border: none;
+    color: #0e0e0f; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .btn-save:hover { background: #d9ff70; }
+
+  /* toast */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--surface2); border: 1px solid var(--border2);
+    border-left: 3px solid var(--accent);
+    color: var(--text); font-size: 13px;
+    padding: 12px 18px; border-radius: var(--radius-sm);
+    z-index: 999; display: none;
+    animation: fadeIn 0.2s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 640px) {
+    .sidebar { display: none; }
+    .main { padding: 1rem 1rem 4rem; }
+    .topbar { flex-wrap: wrap; }
+    .search-bar { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="auth-screen">
+  <div class="auth-box">
+    <div class="auth-logo">SWIPE FILE</div>
+    <div class="auth-tagline">criativos escalados</div>
+    <div class="auth-title">Acesso restrito</div>
+    <div class="auth-desc">Entre com sua conta Google para acessar sua biblioteca de criativos. Só você tem acesso.</div>
+    <button class="google-btn" onclick="loginGoogle()">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+      Entrar com Google
+    </button>
+    <div class="auth-note">⚡ Dados salvos localmente no seu navegador</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="logo">SWIPE</div>
+      <div class="logo-sub">Criativos Escalados</div>
+
+      <div class="nav-label">Filtrar</div>
+      <button class="nav-btn active" onclick="setFilter('todos', this)">
+        <span class="dot"></span> Todos
+      </button>
+      <button class="nav-btn" onclick="setFilter('video', this)">
+        <span class="dot"></span> Vídeo
+      </button>
+      <button class="nav-btn" onclick="setFilter('image', this)">
+        <span class="dot"></span> Imagem
+      </button>
+
+      <div class="nav-label" style="margin-top:1.5rem">Nichos</div>
+      <div id="nicho-nav"></div>
+
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="avatar" id="user-avatar"></div>
+          <div class="user-name" id="user-name-display"></div>
+          <button class="logout-btn" onclick="logout()" title="Sair">✕</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="page-title" id="page-title">Todos os criativos</div>
+        <span class="count-badge" id="count-badge">0 criativos</span>
+        <input class="search-bar" type="text" placeholder="Buscar..." id="searchInput" oninput="render()" />
+        <button class="add-btn" onclick="openModal()">+ Adicionar</button>
+      </div>
+      <div class="grid" id="grid"></div>
+    </main>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Novo criativo</div>
+      <button class="close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="field">
+      <label>Nicho</label>
+      <input type="text" id="f-nicho" placeholder="ex: emagrecimento, finanças, relacionamentos..." />
+    </div>
+    <div class="field">
+      <label>Tipo</label>
+      <select id="f-tipo">
+        <option value="video">📹 Vídeo</option>
+        <option value="image">🖼 Imagem</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Copy / Headline</label>
+      <textarea id="f-copy" placeholder="Texto principal do anúncio..."></textarea>
+    </div>
+    <div class="field">
+      <label>CTA</label>
+      <input type="text" id="f-cta" placeholder="ex: Saiba mais, Compre agora, Quero ver..." />
+    </div>
+    <div class="field">
+      <label>Link do Google Drive</label>
+      <input type="text" id="f-link" placeholder="https://drive.google.com/file/d/..." />
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save" onclick="saveCard()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const STORAGE_KEY = 'swipefile_criativos';
+  const USER_KEY = 'swipefile_user';
+
+  let criativos = [];
+  let currentFilter = 'todos';
+  let currentNicho = null;
+  let editingId = null;
+  let currentUser = null;
+
+  // ── GOOGLE LOGIN (simulado com OAuth popup) ──
+  // Como não há backend, usamos a API de identidade do Google (GSI)
+  // para autenticação real via token JWT
+  function loadGoogleScript() {
+    const s = document.createElement('script');
+    s.src = 'https://accounts.google.com/gsi/client';
+    s.async = true;
+    s.defer = true;
+    s.onload = initGoogle;
+    document.head.appendChild(s);
+  }
+
+  function initGoogle() {
+    if (!window.google) return;
+    // Inicializa com client_id público (modo demo)
+    // Para uso real, substitua pelo seu Client ID do Google Cloud Console
+    google.accounts.id.initialize({
+      client_id: 'COLOQUE_SEU_CLIENT_ID_AQUI.apps.googleusercontent.com',
+      callback: handleGoogleResponse,
+      auto_select: false,
+    });
+  }
+
+  function loginGoogle() {
+    // Tenta login real com Google se o script carregou
+    if (window.google && window.google.accounts) {
+      google.accounts.id.prompt((notification) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          // Fallback: login com nome manual
+          loginManual();
+        }
+      });
+    } else {
+      loginManual();
+    }
+  }
+
+  function handleGoogleResponse(response) {
+    try {
+      const payload = parseJwt(response.credential);
+      currentUser = {
+        name: payload.name,
+        email: payload.email,
+        picture: payload.picture,
+        initials: payload.name.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase()
+      };
+      localStorage.setItem(USER_KEY, JSON.stringify(currentUser));
+      enterApp();
+    } catch(e) {
+      loginManual();
+    }
+  }
+
+  function parseJwt(token) {
+    const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(atob(base64));
+  }
+
+  function loginManual() {
+    const name = prompt('Digite seu nome para criar acesso:');
+    if (!name || !name.trim()) return;
+    currentUser = {
+      name: name.trim(),
+      email: '',
+      picture: null,
+      initials: name.trim().split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase()
+    };
+    localStorage.setItem(USER_KEY, JSON.stringify(currentUser));
+    enterApp();
+  }
+
+  function logout() {
+    if (!confirm('Sair do swipe file?')) return;
+    localStorage.removeItem(USER_KEY);
+    currentUser = null;
+    document.getElementById('auth-screen').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+  }
+
+  function enterApp() {
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+
+    // avatar
+    const av = document.getElementById('user-avatar');
+    if (currentUser.picture) {
+      av.innerHTML = `<img src="${currentUser.picture}" alt="" />`;
+    } else {
+      av.textContent = currentUser.initials;
+    }
+    document.getElementById('user-name-display').textContent = currentUser.name;
+
+    // carrega dados
+    const saved = localStorage.getItem(STORAGE_KEY);
+    criativos = saved ? JSON.parse(saved) : [];
+    render();
+    renderNichoNav();
+  }
+
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(criativos));
+  }
+
+  // ── FILTROS ──
+  function setFilter(f, btn) {
+    currentFilter = f;
+    currentNicho = null;
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('page-title').textContent =
+      f === 'todos' ? 'Todos os criativos' :
+      f === 'video' ? 'Vídeos' : 'Imagens';
+    render();
+  }
+
+  function setNicho(n) {
+    currentNicho = n;
+    currentFilter = 'todos';
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-title').textContent = n;
+    render();
+    renderNichoNav();
+  }
+
+  function renderNichoNav() {
+    const nichos = [...new Set(criativos.map(c => c.nicho).filter(Boolean))].sort();
+    const container = document.getElementById('nicho-nav');
+    container.innerHTML = nichos.map(n => `
+      <button class="nav-btn ${currentNicho === n ? 'active' : ''}" onclick="setNicho('${n.replace(/'/g,"\\'")}')">
+        <span class="dot"></span> ${n}
+      </button>
+    `).join('');
+  }
+
+  // ── RENDER ──
+  function render() {
+    const q = (document.getElementById('searchInput').value || '').toLowerCase();
+    let filtered = criativos.filter(c => {
+      if (currentNicho && c.nicho !== currentNicho) return false;
+      if (!currentNicho && currentFilter !== 'todos' && c.tipo !== currentFilter) return false;
+      if (q && !c.nicho.toLowerCase().includes(q) && !c.copy.toLowerCase().includes(q)) return false;
+      return true;
+    });
+
+    document.getElementById('count-badge').textContent =
+      filtered.length + ' criativo' + (filtered.length !== 1 ? 's' : '');
+
+    const grid = document.getElementById('grid');
+    if (!filtered.length) {
+      grid.innerHTML = `<div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <p>${criativos.length === 0 ? 'Nenhum criativo ainda. Adicione o primeiro!' : 'Nenhum resultado encontrado.'}</p>
+        ${criativos.length === 0 ? `<button class="add-btn" onclick="openModal()">+ Adicionar criativo</button>` : ''}
+      </div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map(c => {
+      const badgeClass = c.tipo === 'video' ? 'badge-video' : 'badge-image';
+      const badgeLabel = c.tipo === 'video' ? 'Vídeo' : 'Imagem';
+      const thumbIcon = c.tipo === 'video' ? '▶' : '🖼';
+      const linkHTML = c.link
+        ? `<a class="card-link" href="${c.link}" target="_blank">🔗 Abrir no Drive</a>`
+        : `<span class="no-link">— sem link</span>`;
+      return `<div class="card">
+        <div class="card-thumb">
+          <span class="thumb-icon">${thumbIcon}</span>
+          <span class="type-badge ${badgeClass}">${badgeLabel}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-nicho">${c.nicho || '—'}</div>
+          <div class="card-copy">${c.copy}</div>
+          <span class="card-cta">${c.cta || 'sem CTA'}</span><br/>
+          ${linkHTML}
+          <div class="card-actions">
+            <button class="action-btn" onclick="editCard(${c.id})">✏ Editar</button>
+            <button class="action-btn del" onclick="deleteCard(${c.id})">✕ Excluir</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // ── MODAL ──
+  function openModal(id) {
+    editingId = id || null;
+    document.getElementById('modal-title').textContent = id ? 'Editar criativo' : 'Novo criativo';
+    if (id) {
+      const c = criativos.find(x => x.id === id);
+      document.getElementById('f-nicho').value = c.nicho;
+      document.getElementById('f-tipo').value = c.tipo;
+      document.getElementById('f-copy').value = c.copy;
+      document.getElementById('f-cta').value = c.cta || '';
+      document.getElementById('f-link').value = c.link || '';
+    } else {
+      ['f-nicho','f-copy','f-cta','f-link'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('f-tipo').value = 'video';
+    }
+    document.getElementById('modalOverlay').classList.add('open');
+    document.getElementById('f-nicho').focus();
+  }
+
+  function editCard(id) { openModal(id); }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  function saveCard() {
+    const nicho = document.getElementById('f-nicho').value.trim();
+    const copy = document.getElementById('f-copy').value.trim();
+    if (!nicho || !copy) { showToast('Preencha o nicho e a copy!'); return; }
+    const data = {
+      nicho,
+      tipo: document.getElementById('f-tipo').value,
+      copy,
+      cta: document.getElementById('f-cta').value.trim(),
+      link: document.getElementById('f-link').value.trim(),
+    };
+    if (editingId) {
+      const i = criativos.findIndex(c => c.id === editingId);
+      criativos[i] = { id: editingId, ...data };
+      showToast('Criativo atualizado!');
+    } else {
+      const newId = Date.now();
+      criativos.unshift({ id: newId, ...data });
+      showToast('Criativo adicionado!');
+    }
+    save();
+    closeModal();
+    render();
+    renderNichoNav();
+  }
+
+  function deleteCard(id) {
+    if (!confirm('Excluir este criativo?')) return;
+    criativos = criativos.filter(c => c.id !== id);
+    save();
+    render();
+    renderNichoNav();
+    showToast('Criativo excluído.');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.display = 'block';
+    setTimeout(() => { t.style.display = 'none'; }, 2500);
+  }
+
+  // ── INIT ──
+  const savedUser = localStorage.getItem(USER_KEY);
+  if (savedUser) {
+    currentUser = JSON.parse(savedUser);
+    enterApp();
+  } else {
+    loadGoogleScript();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
+</body>
+</html>
