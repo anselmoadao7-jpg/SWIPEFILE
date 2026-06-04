@@ -6,452 +6,134 @@
 <title>Swipe File — Criativos Escalados</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet" />
 <style>
-  :root {
-    --bg: #0e0e0f;
-    --surface: #161617;
-    --surface2: #1e1e20;
-    --border: #2a2a2d;
-    --border2: #3a3a3e;
-    --text: #f0efe8;
-    --muted: #888784;
-    --accent: #c8f060;
-    --accent2: #f0c060;
-    --danger: #f06060;
-    --info: #60b8f0;
-    --radius: 12px;
-    --radius-sm: 8px;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+:root{--bg:#0e0e0f;--surface:#161617;--surface2:#1e1e20;--border:#2a2a2d;--border2:#3a3a3e;--text:#f0efe8;--muted:#888784;--accent:#c8f060;--accent2:#f0c060;--danger:#f06060;--info:#60b8f0;--success:#60f0a0;--radius:12px;--radius-sm:8px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-size:14px;line-height:1.6;min-height:100vh;}
 
-  /* ── AUTH SCREEN ── */
-  #auth-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg);
-    position: relative;
-    overflow: hidden;
-  }
-  #auth-screen::before {
-    content: '';
-    position: absolute;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(200,240,96,0.07) 0%, transparent 70%);
-    top: -100px; left: -100px;
-    pointer-events: none;
-  }
-  #auth-screen::after {
-    content: '';
-    position: absolute;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(240,192,96,0.05) 0%, transparent 70%);
-    bottom: -80px; right: -80px;
-    pointer-events: none;
-  }
-  .auth-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 3rem 2.5rem;
-    width: 380px;
-    max-width: 95vw;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-  .auth-logo {
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--accent);
-    margin-bottom: 0.25rem;
-  }
-  .auth-tagline {
-    font-size: 12px;
-    color: var(--muted);
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 2.5rem;
-  }
-  .auth-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-  .auth-desc {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 2rem;
-    line-height: 1.7;
-  }
-  .google-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    padding: 13px 20px;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    border-radius: var(--radius);
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .google-btn:hover { background: #28282c; border-color: var(--muted); }
-  .google-btn svg { flex-shrink: 0; }
-  .auth-note {
-    margin-top: 1.5rem;
-    font-size: 11px;
-    color: var(--muted);
-    font-family: 'DM Mono', monospace;
-  }
+/* AUTH */
+#auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);position:relative;overflow:hidden;}
+#auth-screen::before{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(200,240,96,0.07) 0%,transparent 70%);top:-100px;left:-100px;pointer-events:none;}
+.auth-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:3rem 2.5rem;width:400px;max-width:95vw;text-align:center;position:relative;z-index:1;}
+.auth-logo{font-size:30px;font-weight:800;letter-spacing:-0.03em;color:var(--accent);margin-bottom:0.25rem;}
+.auth-tagline{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:2.5rem;}
+.auth-title{font-size:20px;font-weight:700;margin-bottom:0.5rem;}
+.auth-desc{font-size:13px;color:var(--muted);margin-bottom:2rem;line-height:1.7;}
+.enter-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px 20px;background:var(--accent);border:none;border-radius:var(--radius);color:#0e0e0f;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.enter-btn:hover{background:#d9ff70;}
+.auth-note{margin-top:1.25rem;font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;}
 
-  /* ── APP ── */
-  #app { display: none; min-height: 100vh; }
+/* LAYOUT */
+#app{display:none;min-height:100vh;}
+.layout{display:flex;min-height:100vh;}
+.sidebar{width:230px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1.5rem 1rem;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.logo{font-size:18px;font-weight:800;color:var(--accent);letter-spacing:-0.02em;padding:0 0.5rem;margin-bottom:0.1rem;}
+.logo-sub{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);padding:0 0.5rem;margin-bottom:2rem;letter-spacing:0.06em;text-transform:uppercase;}
+.nav-label{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;padding:0 0.5rem;margin-bottom:0.4rem;margin-top:1rem;}
+.nav-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;border-radius:var(--radius-sm);border:none;background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:12px;font-weight:500;cursor:pointer;text-align:left;transition:all 0.15s;margin-bottom:2px;}
+.nav-btn:hover{background:var(--surface2);color:var(--text);}
+.nav-btn.active{background:var(--surface2);color:var(--accent);}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0;}
+.nav-btn.active .nav-dot{background:var(--accent);}
+.sidebar-footer{margin-top:auto;padding-top:1rem;}
+.user-chip{display:flex;align-items:center;gap:8px;padding:10px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border);}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#0e0e0f;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.user-name{font-size:12px;font-weight:500;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.logout-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px;transition:color 0.15s;}
+.logout-btn:hover{color:var(--danger);}
 
-  /* sidebar */
-  .layout { display: flex; min-height: 100vh; }
-  .sidebar {
-    width: 220px;
-    flex-shrink: 0;
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    padding: 1.5rem 1rem;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-  }
-  .logo {
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--accent);
-    letter-spacing: -0.02em;
-    padding: 0 0.5rem;
-    margin-bottom: 0.25rem;
-  }
-  .logo-sub {
-    font-size: 10px;
-    font-family: 'DM Mono', monospace;
-    color: var(--muted);
-    padding: 0 0.5rem;
-    margin-bottom: 2rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .nav-label {
-    font-size: 10px;
-    font-family: 'DM Mono', monospace;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  .nav-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: var(--radius-sm);
-    border: none;
-    background: transparent;
-    color: var(--muted);
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.15s;
-    margin-bottom: 2px;
-  }
-  .nav-btn:hover { background: var(--surface2); color: var(--text); }
-  .nav-btn.active { background: var(--surface2); color: var(--accent); }
-  .nav-btn .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--muted);
-    flex-shrink: 0;
-  }
-  .nav-btn.active .dot { background: var(--accent); }
+/* MAIN */
+.main{flex:1;padding:2rem 2rem 4rem;}
+.topbar{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.page-title{font-size:22px;font-weight:800;flex:1;letter-spacing:-0.02em;}
+.count-badge{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.search-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 14px;color:var(--text);font-family:'Syne',sans-serif;font-size:13px;width:180px;transition:border-color 0.2s;}
+.search-bar:focus{outline:none;border-color:var(--border2);}
+.search-bar::placeholder{color:var(--muted);}
+.add-btn{display:flex;align-items:center;gap:6px;background:var(--accent);color:#0e0e0f;border:none;padding:9px 18px;border-radius:var(--radius-sm);font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.add-btn:hover{background:#d9ff70;transform:translateY(-1px);}
 
-  .sidebar-footer { margin-top: auto; }
-  .user-chip {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px;
-    background: var(--surface2);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-  }
-  .avatar {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #0e0e0f;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700;
-    flex-shrink: 0;
-    overflow: hidden;
-  }
-  .avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .user-name { font-size: 12px; font-weight: 500; color: var(--text); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .logout-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; padding: 2px; transition: color 0.15s; }
-  .logout-btn:hover { color: var(--danger); }
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;}
 
-  /* main */
-  .main { flex: 1; padding: 2rem 2rem 4rem; max-width: 1100px; }
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color 0.2s,transform 0.2s;cursor:default;}
+.card:hover{border-color:var(--border2);transform:translateY(-2px);}
 
-  .topbar { display: flex; align-items: center; gap: 12px; margin-bottom: 2rem; flex-wrap: wrap; }
-  .page-title { font-size: 22px; font-weight: 800; flex: 1; letter-spacing: -0.02em; }
-  .count-badge {
-    font-size: 11px;
-    font-family: 'DM Mono', monospace;
-    color: var(--muted);
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    padding: 3px 10px;
-    border-radius: 20px;
-  }
-  .search-bar {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 8px 14px;
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    width: 200px;
-    transition: border-color 0.2s;
-  }
-  .search-bar:focus { outline: none; border-color: var(--border2); }
-  .search-bar::placeholder { color: var(--muted); }
+/* THUMB */
+.card-thumb{width:100%;aspect-ratio:16/9;background:var(--surface2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.card-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.card-thumb iframe{width:100%;height:100%;border:none;pointer-events:none;}
+.thumb-placeholder{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--border2);font-size:12px;font-family:'DM Mono',monospace;}
+.thumb-placeholder span{font-size:30px;}
+.play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.35);opacity:0;transition:opacity 0.2s;}
+.card:hover .play-overlay{opacity:1;}
+.play-btn{width:44px;height:44px;border-radius:50%;background:rgba(200,240,96,0.9);display:flex;align-items:center;justify-content:center;font-size:16px;color:#0e0e0f;}
 
-  .add-btn {
-    display: flex; align-items: center; gap: 6px;
-    background: var(--accent);
-    color: #0e0e0f;
-    border: none;
-    padding: 9px 18px;
-    border-radius: var(--radius-sm);
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.15s;
-    white-space: nowrap;
-  }
-  .add-btn:hover { background: #d9ff70; transform: translateY(-1px); }
+.type-badge{position:absolute;top:8px;left:8px;font-size:10px;font-family:'DM Mono',monospace;font-weight:500;padding:3px 9px;border-radius:20px;letter-spacing:0.04em;text-transform:uppercase;z-index:2;}
+.badge-video{background:rgba(200,240,96,0.15);color:var(--accent);border:1px solid rgba(200,240,96,0.3);}
+.badge-image{background:rgba(96,184,240,0.15);color:var(--info);border:1px solid rgba(96,184,240,0.3);}
+.escala-badge{position:absolute;top:8px;right:8px;font-size:10px;font-family:'DM Mono',monospace;padding:3px 9px;border-radius:20px;z-index:2;}
+.escala-pequeno{background:rgba(96,240,160,0.15);color:var(--success);border:1px solid rgba(96,240,160,0.25);}
+.escala-medio{background:rgba(240,192,96,0.15);color:var(--accent2);border:1px solid rgba(240,192,96,0.25);}
+.escala-alto{background:rgba(240,96,96,0.15);color:var(--danger);border:1px solid rgba(240,96,96,0.25);}
 
-  /* grid */
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+/* CARD BODY */
+.card-body{padding:12px 14px 14px;}
+.card-nicho{font-size:10px;font-family:'DM Mono',monospace;color:var(--accent2);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;}
+.card-gancho{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
+.card-copy{font-size:13px;font-weight:600;color:var(--text);line-height:1.45;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.card-insight{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px;padding:8px 10px;background:var(--surface2);border-radius:var(--radius-sm);border-left:2px solid var(--accent);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.card-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;}
+.tag{font-size:10px;font-family:'DM Mono',monospace;padding:2px 8px;border-radius:20px;background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
+.tag-topo{color:var(--info);border-color:rgba(96,184,240,0.3);background:rgba(96,184,240,0.08);}
+.tag-meio{color:var(--accent2);border-color:rgba(240,192,96,0.3);background:rgba(240,192,96,0.08);}
+.tag-fundo{color:var(--success);border-color:rgba(96,240,160,0.3);background:rgba(96,240,160,0.08);}
+.tag-emocao{color:#d096f0;border-color:rgba(208,150,240,0.3);background:rgba(208,150,240,0.08);}
+.card-meta{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:8px;}
+.card-actions{display:flex;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+.action-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:7px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all 0.15s;}
+.action-btn:hover{background:var(--surface2);color:var(--text);border-color:var(--border2);}
+.action-btn.del:hover{color:var(--danger);border-color:rgba(240,96,96,0.3);background:rgba(240,96,96,0.08);}
+.action-btn.open-link{color:var(--info);}
+.action-btn.open-link:hover{border-color:rgba(96,184,240,0.3);background:rgba(96,184,240,0.08);color:var(--info);}
 
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.empty-state{grid-column:1/-1;text-align:center;padding:4rem 1rem;color:var(--muted);}
+.empty-icon{font-size:48px;margin-bottom:1rem;}
+.empty-state p{font-size:14px;margin-bottom:1.5rem;}
 
-  .card-thumb {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: var(--surface2);
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .thumb-icon { font-size: 32px; color: var(--border2); }
-  .type-badge {
-    position: absolute; top: 8px; left: 8px;
-    font-size: 10px;
-    font-family: 'DM Mono', monospace;
-    font-weight: 500;
-    padding: 3px 9px;
-    border-radius: 20px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .badge-video { background: rgba(200,240,96,0.15); color: var(--accent); border: 1px solid rgba(200,240,96,0.3); }
-  .badge-image { background: rgba(96,184,240,0.15); color: var(--info); border: 1px solid rgba(96,184,240,0.3); }
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:2rem;width:580px;max-width:95vw;max-height:90vh;overflow-y:auto;animation:slideUp 0.2s ease;}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.modal-title{font-size:17px;font-weight:700;}
+.close-btn{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:4px;border-radius:6px;transition:all 0.15s;line-height:1;}
+.close-btn:hover{background:var(--surface2);color:var(--text);}
+.modal-section{font-size:10px;font-family:'DM Mono',monospace;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin:1.25rem 0 0.75rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;}
+.field input,.field select,.field textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-family:'Syne',sans-serif;font-size:13px;transition:border-color 0.2s;}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted);}
+.field textarea{height:72px;resize:vertical;}
+.field select option{background:var(--surface2);color:var(--text);}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.field-hint{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:5px;line-height:1.5;}
+.field-hint b{color:var(--accent2);}
+.drive-preview{margin-top:8px;border-radius:var(--radius-sm);overflow:hidden;background:var(--surface2);border:1px solid var(--border);aspect-ratio:16/9;display:none;align-items:center;justify-content:center;}
+.drive-preview img{width:100%;height:100%;object-fit:cover;}
+.drive-preview iframe{width:100%;height:100%;border:none;}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1.5rem;}
+.btn-cancel{padding:9px 18px;border-radius:var(--radius-sm);background:transparent;border:1px solid var(--border2);color:var(--muted);font-family:'Syne',sans-serif;font-size:13px;cursor:pointer;transition:all 0.15s;}
+.btn-cancel:hover{background:var(--surface2);color:var(--text);}
+.btn-save{padding:9px 20px;border-radius:var(--radius-sm);background:var(--accent);border:none;color:#0e0e0f;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.15s;}
+.btn-save:hover{background:#d9ff70;}
 
-  .card-body { padding: 12px 14px 14px; }
-  .card-nicho {
-    font-size: 10px;
-    font-family: 'DM Mono', monospace;
-    color: var(--accent2);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-  }
-  .card-copy {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.45;
-    margin-bottom: 8px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .card-cta {
-    display: inline-block;
-    font-size: 11px;
-    font-family: 'DM Mono', monospace;
-    padding: 3px 10px;
-    border-radius: 20px;
-    background: var(--surface2);
-    color: var(--muted);
-    margin-bottom: 10px;
-    border: 1px solid var(--border);
-  }
-  .card-link {
-    display: flex; align-items: center; gap: 5px;
-    font-size: 11px;
-    font-family: 'DM Mono', monospace;
-    color: var(--info);
-    text-decoration: none;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .card-link:hover { text-decoration: underline; }
-  .no-link { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--border2); }
-
-  .card-actions {
-    display: flex; gap: 6px;
-    margin-top: 12px;
-    padding-top: 10px;
-    border-top: 1px solid var(--border);
-  }
-  .action-btn {
-    flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px;
-    padding: 6px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    font-family: 'Syne', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .action-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--border2); }
-  .action-btn.del:hover { color: var(--danger); border-color: rgba(240,96,96,0.3); background: rgba(240,96,96,0.08); }
-
-  .empty-state {
-    grid-column: 1/-1;
-    text-align: center;
-    padding: 4rem 1rem;
-    color: var(--muted);
-  }
-  .empty-icon { font-size: 48px; margin-bottom: 1rem; color: var(--border2); }
-  .empty-state p { font-size: 14px; margin-bottom: 1.5rem; }
-
-  /* ── MODAL ── */
-  .modal-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: 200;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(4px);
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--surface);
-    border: 1px solid var(--border2);
-    border-radius: 16px;
-    padding: 2rem;
-    width: 480px;
-    max-width: 95vw;
-    max-height: 90vh;
-    overflow-y: auto;
-    animation: slideUp 0.2s ease;
-  }
-  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-  .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
-  .modal-title { font-size: 17px; font-weight: 700; }
-  .close-btn { background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; padding: 4px; border-radius: 6px; transition: all 0.15s; line-height: 1; }
-  .close-btn:hover { background: var(--surface2); color: var(--text); }
-
-  .field { margin-bottom: 14px; }
-  .field label { display: block; font-size: 11px; font-family: 'DM Mono', monospace; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
-  .field input, .field select, .field textarea {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 9px 12px;
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    transition: border-color 0.2s;
-  }
-  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
-  .field input::placeholder, .field textarea::placeholder { color: var(--muted); }
-  .field textarea { height: 80px; resize: vertical; }
-  .field select option { background: var(--surface2); color: var(--text); }
-
-  .modal-footer { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.5rem; }
-  .btn-cancel {
-    padding: 9px 18px; border-radius: var(--radius-sm);
-    background: transparent; border: 1px solid var(--border2);
-    color: var(--muted); font-family: 'Syne', sans-serif; font-size: 13px;
-    cursor: pointer; transition: all 0.15s;
-  }
-  .btn-cancel:hover { background: var(--surface2); color: var(--text); }
-  .btn-save {
-    padding: 9px 20px; border-radius: var(--radius-sm);
-    background: var(--accent); border: none;
-    color: #0e0e0f; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
-    cursor: pointer; transition: all 0.15s;
-  }
-  .btn-save:hover { background: #d9ff70; }
-
-  /* toast */
-  .toast {
-    position: fixed; bottom: 24px; right: 24px;
-    background: var(--surface2); border: 1px solid var(--border2);
-    border-left: 3px solid var(--accent);
-    color: var(--text); font-size: 13px;
-    padding: 12px 18px; border-radius: var(--radius-sm);
-    z-index: 999; display: none;
-    animation: fadeIn 0.2s ease;
-  }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-  @media (max-width: 640px) {
-    .sidebar { display: none; }
-    .main { padding: 1rem 1rem 4rem; }
-    .topbar { flex-wrap: wrap; }
-    .search-bar { width: 100%; }
-  }
+.toast{position:fixed;bottom:24px;right:24px;background:var(--surface2);border:1px solid var(--border2);border-left:3px solid var(--accent);color:var(--text);font-size:13px;padding:12px 18px;border-radius:var(--radius-sm);z-index:999;display:none;animation:fadeIn 0.2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@media(max-width:640px){.sidebar{display:none;}.main{padding:1rem 1rem 4rem;}.field-row{grid-template-columns:1fr;}.search-bar{width:100%;}}
 </style>
 </head>
 <body>
@@ -461,13 +143,10 @@
   <div class="auth-box">
     <div class="auth-logo">SWIPE FILE</div>
     <div class="auth-tagline">criativos escalados</div>
-    <div class="auth-title">Acesso restrito</div>
-    <div class="auth-desc">Entre com sua conta Google para acessar sua biblioteca de criativos. Só você tem acesso.</div>
-    <button class="google-btn" onclick="loginGoogle()">
-      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
-      Entrar com Google
-    </button>
-    <div class="auth-note">⚡ Dados salvos localmente no seu navegador</div>
+    <div class="auth-title">Sua biblioteca privada</div>
+    <div class="auth-desc">Guarde, analise e aprenda com os criativos que mais escalaram. Acesso exclusivo seu.</div>
+    <button class="enter-btn" onclick="loginManual()">Entrar na biblioteca</button>
+    <div class="auth-note">dados salvos no seu navegador</div>
   </div>
 </div>
 
@@ -477,26 +156,25 @@
     <aside class="sidebar">
       <div class="logo">SWIPE</div>
       <div class="logo-sub">Criativos Escalados</div>
-
-      <div class="nav-label">Filtrar</div>
-      <button class="nav-btn active" onclick="setFilter('todos', this)">
-        <span class="dot"></span> Todos
-      </button>
-      <button class="nav-btn" onclick="setFilter('video', this)">
-        <span class="dot"></span> Vídeo
-      </button>
-      <button class="nav-btn" onclick="setFilter('image', this)">
-        <span class="dot"></span> Imagem
-      </button>
-
-      <div class="nav-label" style="margin-top:1.5rem">Nichos</div>
+      <div class="nav-label">Tipo</div>
+      <button class="nav-btn active" onclick="setFilter('tipo','todos',this)"><span class="nav-dot"></span> Todos</button>
+      <button class="nav-btn" onclick="setFilter('tipo','video',this)"><span class="nav-dot"></span> Video</button>
+      <button class="nav-btn" onclick="setFilter('tipo','image',this)"><span class="nav-dot"></span> Imagem</button>
+      <div class="nav-label">Funil</div>
+      <button class="nav-btn" onclick="setFilter('funil','topo',this)"><span class="nav-dot"></span> Topo (cold)</button>
+      <button class="nav-btn" onclick="setFilter('funil','meio',this)"><span class="nav-dot"></span> Meio</button>
+      <button class="nav-btn" onclick="setFilter('funil','fundo',this)"><span class="nav-dot"></span> Fundo (retarg.)</button>
+      <div class="nav-label">Escala</div>
+      <button class="nav-btn" onclick="setFilter('escala','pequeno',this)"><span class="nav-dot"></span> Pequeno</button>
+      <button class="nav-btn" onclick="setFilter('escala','medio',this)"><span class="nav-dot"></span> Medio</button>
+      <button class="nav-btn" onclick="setFilter('escala','alto',this)"><span class="nav-dot"></span> Muito escalado</button>
+      <div class="nav-label">Nichos</div>
       <div id="nicho-nav"></div>
-
       <div class="sidebar-footer">
         <div class="user-chip">
           <div class="avatar" id="user-avatar"></div>
           <div class="user-name" id="user-name-display"></div>
-          <button class="logout-btn" onclick="logout()" title="Sair">✕</button>
+          <button class="logout-btn" onclick="logout()" title="Sair">x</button>
         </div>
       </div>
     </aside>
@@ -518,34 +196,53 @@
   <div class="modal">
     <div class="modal-header">
       <div class="modal-title" id="modal-title">Novo criativo</div>
-      <button class="close-btn" onclick="closeModal()">✕</button>
+      <button class="close-btn" onclick="closeModal()">x</button>
     </div>
-    <div class="field">
-      <label>Nicho</label>
-      <input type="text" id="f-nicho" placeholder="ex: emagrecimento, finanças, relacionamentos..." />
+
+    <div class="modal-section">Informacoes basicas</div>
+    <div class="field-row">
+      <div class="field"><label>Nicho</label><input type="text" id="f-nicho" placeholder="emagrecimento, financas..." /></div>
+      <div class="field"><label>Tipo</label><select id="f-tipo"><option value="video">Video</option><option value="image">Imagem</option></select></div>
     </div>
-    <div class="field">
-      <label>Tipo</label>
-      <select id="f-tipo">
-        <option value="video">📹 Vídeo</option>
-        <option value="image">🖼 Imagem</option>
-      </select>
+    <div class="field"><label>Gancho (primeiros 3 segundos)</label><input type="text" id="f-gancho" placeholder="O que aparece logo no inicio..." /></div>
+    <div class="field"><label>Copy / Headline</label><textarea id="f-copy" placeholder="Texto principal do anuncio..."></textarea></div>
+    <div class="field-row">
+      <div class="field"><label>CTA</label><input type="text" id="f-cta" placeholder="Saiba mais, Compre agora..." /></div>
+      <div class="field"><label>Plataforma</label><select id="f-plataforma"><option value="">selecione</option><option value="Meta">Meta (FB/IG)</option><option value="TikTok">TikTok</option><option value="YouTube">YouTube</option><option value="Google">Google</option></select></div>
     </div>
-    <div class="field">
-      <label>Copy / Headline</label>
-      <textarea id="f-copy" placeholder="Texto principal do anúncio..."></textarea>
+
+    <div class="modal-section">Analise</div>
+    <div class="field-row">
+      <div class="field"><label>Fase do funil</label><select id="f-funil"><option value="">selecione</option><option value="topo">Topo (cold)</option><option value="meio">Meio</option><option value="fundo">Fundo (retarg.)</option></select></div>
+      <div class="field"><label>Nivel de escala</label><select id="f-escala"><option value="">selecione</option><option value="pequeno">Pequeno</option><option value="medio">Medio</option><option value="alto">Muito escalado</option></select></div>
     </div>
-    <div class="field">
-      <label>CTA</label>
-      <input type="text" id="f-cta" placeholder="ex: Saiba mais, Compre agora, Quero ver..." />
+    <div class="field-row">
+      <div class="field"><label>Formato</label><select id="f-formato"><option value="">selecione</option><option value="UGC">UGC</option><option value="Direto ao ponto">Direto ao ponto</option><option value="Storytelling">Storytelling</option><option value="Prova social">Prova social</option><option value="Antes e depois">Antes e depois</option><option value="Educativo">Educativo</option><option value="Polemico">Polemico</option></select></div>
+      <div class="field"><label>Emocao principal</label><select id="f-emocao"><option value="">selecione</option><option value="Curiosidade">Curiosidade</option><option value="Medo">Medo</option><option value="Ganancia">Ganancia</option><option value="Urgencia">Urgencia</option><option value="Esperanca">Esperanca</option><option value="Raiva">Raiva</option><option value="Inveja">Inveja</option></select></div>
     </div>
+    <div class="field"><label>Por que esse criativo funciona?</label><textarea id="f-insight" placeholder="Seu insight — o que faz esse anuncio escalar..."></textarea></div>
+    <div class="field-row">
+      <div class="field"><label>Duracao (seg)</label><input type="number" id="f-duracao" placeholder="ex: 30" /></div>
+      <div class="field"><label>Proporcao</label><select id="f-proporcao"><option value="">selecione</option><option value="9:16">9:16 (vertical)</option><option value="1:1">1:1 (quadrado)</option><option value="16:9">16:9 (horizontal)</option></select></div>
+    </div>
+
+    <div class="modal-section">Midia do Google Drive</div>
     <div class="field">
       <label>Link do Google Drive</label>
-      <input type="text" id="f-link" placeholder="https://drive.google.com/file/d/..." />
+      <input type="text" id="f-link" placeholder="https://drive.google.com/file/d/ID_DO_ARQUIVO/view" oninput="previewDrive()" />
+      <div class="field-hint">
+        Cole o link de compartilhamento do Drive. O preview aparece automaticamente abaixo.<br/>
+        <b>Importante:</b> configure o arquivo como "qualquer pessoa com o link pode ver".
+      </div>
+      <div class="drive-preview" id="drive-preview">
+        <img id="preview-img" src="" alt="" style="display:none" />
+        <iframe id="preview-iframe" src="" style="display:none" allowfullscreen></iframe>
+      </div>
     </div>
+
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-      <button class="btn-save" onclick="saveCard()">Salvar</button>
+      <button class="btn-save" onclick="saveCard()">Salvar criativo</button>
     </div>
   </div>
 </div>
@@ -553,281 +250,240 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  const STORAGE_KEY = 'swipefile_criativos';
-  const USER_KEY = 'swipefile_user';
+var STORAGE_KEY = 'swipefile_v4';
+var USER_KEY = 'swipefile_user';
+var criativos = [];
+var activeFilters = { tipo: 'todos', funil: null, escala: null, nicho: null };
+var editingId = null;
+var currentUser = null;
 
-  let criativos = [];
-  let currentFilter = 'todos';
-  let currentNicho = null;
-  let editingId = null;
-  let currentUser = null;
+// Extrai o ID do Google Drive de qualquer formato de link
+function extractDriveId(url) {
+  if (!url) return null;
+  var m = url.match(/\/d\/([a-zA-Z0-9_-]{10,})/);
+  if (m) return m[1];
+  m = url.match(/id=([a-zA-Z0-9_-]{10,})/);
+  if (m) return m[1];
+  // Se ja for um ID puro
+  if (/^[a-zA-Z0-9_-]{25,}$/.test(url.trim())) return url.trim();
+  return null;
+}
 
-  // ── GOOGLE LOGIN (simulado com OAuth popup) ──
-  // Como não há backend, usamos a API de identidade do Google (GSI)
-  // para autenticação real via token JWT
-  function loadGoogleScript() {
-    const s = document.createElement('script');
-    s.src = 'https://accounts.google.com/gsi/client';
-    s.async = true;
-    s.defer = true;
-    s.onload = initGoogle;
-    document.head.appendChild(s);
-  }
+function getDriveThumbUrl(id) {
+  return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w400';
+}
 
-  function initGoogle() {
-    if (!window.google) return;
-    // Inicializa com client_id público (modo demo)
-    // Para uso real, substitua pelo seu Client ID do Google Cloud Console
-    google.accounts.id.initialize({
-      client_id: 'COLOQUE_SEU_CLIENT_ID_AQUI.apps.googleusercontent.com',
-      callback: handleGoogleResponse,
-      auto_select: false,
-    });
-  }
+function getDrivePreviewUrl(id) {
+  return 'https://drive.google.com/file/d/' + id + '/preview';
+}
 
-  function loginGoogle() {
-    // Tenta login real com Google se o script carregou
-    if (window.google && window.google.accounts) {
-      google.accounts.id.prompt((notification) => {
-        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          // Fallback: login com nome manual
-          loginManual();
-        }
-      });
-    } else {
-      loginManual();
-    }
-  }
-
-  function handleGoogleResponse(response) {
-    try {
-      const payload = parseJwt(response.credential);
-      currentUser = {
-        name: payload.name,
-        email: payload.email,
-        picture: payload.picture,
-        initials: payload.name.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase()
-      };
-      localStorage.setItem(USER_KEY, JSON.stringify(currentUser));
-      enterApp();
-    } catch(e) {
-      loginManual();
-    }
-  }
-
-  function parseJwt(token) {
-    const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-    return JSON.parse(atob(base64));
-  }
-
-  function loginManual() {
-    const name = prompt('Digite seu nome para criar acesso:');
-    if (!name || !name.trim()) return;
-    currentUser = {
-      name: name.trim(),
-      email: '',
-      picture: null,
-      initials: name.trim().split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase()
-    };
-    localStorage.setItem(USER_KEY, JSON.stringify(currentUser));
-    enterApp();
-  }
-
-  function logout() {
-    if (!confirm('Sair do swipe file?')) return;
-    localStorage.removeItem(USER_KEY);
-    currentUser = null;
-    document.getElementById('auth-screen').style.display = 'flex';
-    document.getElementById('app').style.display = 'none';
-  }
-
-  function enterApp() {
-    document.getElementById('auth-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-
-    // avatar
-    const av = document.getElementById('user-avatar');
-    if (currentUser.picture) {
-      av.innerHTML = `<img src="${currentUser.picture}" alt="" />`;
-    } else {
-      av.textContent = currentUser.initials;
-    }
-    document.getElementById('user-name-display').textContent = currentUser.name;
-
-    // carrega dados
-    const saved = localStorage.getItem(STORAGE_KEY);
-    criativos = saved ? JSON.parse(saved) : [];
-    render();
-    renderNichoNav();
-  }
-
-  function save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(criativos));
-  }
-
-  // ── FILTROS ──
-  function setFilter(f, btn) {
-    currentFilter = f;
-    currentNicho = null;
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('page-title').textContent =
-      f === 'todos' ? 'Todos os criativos' :
-      f === 'video' ? 'Vídeos' : 'Imagens';
-    render();
-  }
-
-  function setNicho(n) {
-    currentNicho = n;
-    currentFilter = 'todos';
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('page-title').textContent = n;
-    render();
-    renderNichoNav();
-  }
-
-  function renderNichoNav() {
-    const nichos = [...new Set(criativos.map(c => c.nicho).filter(Boolean))].sort();
-    const container = document.getElementById('nicho-nav');
-    container.innerHTML = nichos.map(n => `
-      <button class="nav-btn ${currentNicho === n ? 'active' : ''}" onclick="setNicho('${n.replace(/'/g,"\\'")}')">
-        <span class="dot"></span> ${n}
-      </button>
-    `).join('');
-  }
-
-  // ── RENDER ──
-  function render() {
-    const q = (document.getElementById('searchInput').value || '').toLowerCase();
-    let filtered = criativos.filter(c => {
-      if (currentNicho && c.nicho !== currentNicho) return false;
-      if (!currentNicho && currentFilter !== 'todos' && c.tipo !== currentFilter) return false;
-      if (q && !c.nicho.toLowerCase().includes(q) && !c.copy.toLowerCase().includes(q)) return false;
-      return true;
-    });
-
-    document.getElementById('count-badge').textContent =
-      filtered.length + ' criativo' + (filtered.length !== 1 ? 's' : '');
-
-    const grid = document.getElementById('grid');
-    if (!filtered.length) {
-      grid.innerHTML = `<div class="empty-state">
-        <div class="empty-icon">📭</div>
-        <p>${criativos.length === 0 ? 'Nenhum criativo ainda. Adicione o primeiro!' : 'Nenhum resultado encontrado.'}</p>
-        ${criativos.length === 0 ? `<button class="add-btn" onclick="openModal()">+ Adicionar criativo</button>` : ''}
-      </div>`;
-      return;
-    }
-
-    grid.innerHTML = filtered.map(c => {
-      const badgeClass = c.tipo === 'video' ? 'badge-video' : 'badge-image';
-      const badgeLabel = c.tipo === 'video' ? 'Vídeo' : 'Imagem';
-      const thumbIcon = c.tipo === 'video' ? '▶' : '🖼';
-      const linkHTML = c.link
-        ? `<a class="card-link" href="${c.link}" target="_blank">🔗 Abrir no Drive</a>`
-        : `<span class="no-link">— sem link</span>`;
-      return `<div class="card">
-        <div class="card-thumb">
-          <span class="thumb-icon">${thumbIcon}</span>
-          <span class="type-badge ${badgeClass}">${badgeLabel}</span>
-        </div>
-        <div class="card-body">
-          <div class="card-nicho">${c.nicho || '—'}</div>
-          <div class="card-copy">${c.copy}</div>
-          <span class="card-cta">${c.cta || 'sem CTA'}</span><br/>
-          ${linkHTML}
-          <div class="card-actions">
-            <button class="action-btn" onclick="editCard(${c.id})">✏ Editar</button>
-            <button class="action-btn del" onclick="deleteCard(${c.id})">✕ Excluir</button>
-          </div>
-        </div>
-      </div>`;
-    }).join('');
-  }
-
-  // ── MODAL ──
-  function openModal(id) {
-    editingId = id || null;
-    document.getElementById('modal-title').textContent = id ? 'Editar criativo' : 'Novo criativo';
-    if (id) {
-      const c = criativos.find(x => x.id === id);
-      document.getElementById('f-nicho').value = c.nicho;
-      document.getElementById('f-tipo').value = c.tipo;
-      document.getElementById('f-copy').value = c.copy;
-      document.getElementById('f-cta').value = c.cta || '';
-      document.getElementById('f-link').value = c.link || '';
-    } else {
-      ['f-nicho','f-copy','f-cta','f-link'].forEach(id => document.getElementById(id).value = '');
-      document.getElementById('f-tipo').value = 'video';
-    }
-    document.getElementById('modalOverlay').classList.add('open');
-    document.getElementById('f-nicho').focus();
-  }
-
-  function editCard(id) { openModal(id); }
-
-  function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('open');
-  }
-
-  function handleOverlayClick(e) {
-    if (e.target === document.getElementById('modalOverlay')) closeModal();
-  }
-
-  function saveCard() {
-    const nicho = document.getElementById('f-nicho').value.trim();
-    const copy = document.getElementById('f-copy').value.trim();
-    if (!nicho || !copy) { showToast('Preencha o nicho e a copy!'); return; }
-    const data = {
-      nicho,
-      tipo: document.getElementById('f-tipo').value,
-      copy,
-      cta: document.getElementById('f-cta').value.trim(),
-      link: document.getElementById('f-link').value.trim(),
-    };
-    if (editingId) {
-      const i = criativos.findIndex(c => c.id === editingId);
-      criativos[i] = { id: editingId, ...data };
-      showToast('Criativo atualizado!');
-    } else {
-      const newId = Date.now();
-      criativos.unshift({ id: newId, ...data });
-      showToast('Criativo adicionado!');
-    }
-    save();
-    closeModal();
-    render();
-    renderNichoNav();
-  }
-
-  function deleteCard(id) {
-    if (!confirm('Excluir este criativo?')) return;
-    criativos = criativos.filter(c => c.id !== id);
-    save();
-    render();
-    renderNichoNav();
-    showToast('Criativo excluído.');
-  }
-
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.style.display = 'block';
-    setTimeout(() => { t.style.display = 'none'; }, 2500);
-  }
-
-  // ── INIT ──
-  const savedUser = localStorage.getItem(USER_KEY);
-  if (savedUser) {
-    currentUser = JSON.parse(savedUser);
-    enterApp();
+function previewDrive() {
+  var link = document.getElementById('f-link').value.trim();
+  var tipo = document.getElementById('f-tipo').value;
+  var previewBox = document.getElementById('drive-preview');
+  var img = document.getElementById('preview-img');
+  var iframe = document.getElementById('preview-iframe');
+  var id = extractDriveId(link);
+  if (!id) { previewBox.style.display = 'none'; return; }
+  previewBox.style.display = 'flex';
+  if (tipo === 'image') {
+    img.src = getDriveThumbUrl(id);
+    img.style.display = 'block';
+    iframe.style.display = 'none';
+    iframe.src = '';
   } else {
-    loadGoogleScript();
+    iframe.src = getDrivePreviewUrl(id);
+    iframe.style.display = 'block';
+    img.style.display = 'none';
+    img.src = '';
   }
+}
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
+function buildThumbHTML(c) {
+  var id = extractDriveId(c.link);
+  if (!id) {
+    return '<div class="thumb-placeholder"><span>' + (c.tipo === 'video' ? '▶' : '🖼') + '</span><span style="font-size:11px">' + (c.tipo === 'video' ? 'video' : 'imagem') + '</span></div>';
+  }
+  if (c.tipo === 'image') {
+    return '<img src="' + getDriveThumbUrl(id) + '" alt="" onerror="this.parentNode.innerHTML=\'<div class=thumb-placeholder><span>🖼</span><span style=font-size:11px>sem preview</span></div>\'" />';
+  } else {
+    // Para video: thumbnail clicavel que abre o Drive
+    return '<img src="' + getDriveThumbUrl(id) + '" alt="" onerror="this.src=\'\';this.parentNode.innerHTML=\'<div class=thumb-placeholder><span>▶</span><span style=font-size:11px>video</span></div>\'" />'
+      + '<div class="play-overlay"><div class="play-btn">▶</div></div>';
+  }
+}
+
+function loginManual() {
+  var name = prompt('Digite seu nome para entrar:');
+  if (!name || !name.trim()) return;
+  currentUser = { name: name.trim(), initials: name.trim().split(' ').map(function(n){return n[0];}).slice(0,2).join('').toUpperCase() };
+  localStorage.setItem(USER_KEY, JSON.stringify(currentUser));
+  enterApp();
+}
+
+function logout() {
+  if (!confirm('Sair?')) return;
+  localStorage.removeItem(USER_KEY);
+  currentUser = null;
+  document.getElementById('auth-screen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+}
+
+function enterApp() {
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('user-avatar').textContent = currentUser.initials;
+  document.getElementById('user-name-display').textContent = currentUser.name;
+  var saved = localStorage.getItem(STORAGE_KEY);
+  criativos = saved ? JSON.parse(saved) : [];
+  render();
+  renderNichoNav();
+}
+
+function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(criativos)); }
+
+function setFilter(type, val, btn) {
+  if (type === 'tipo') { activeFilters.tipo = val; activeFilters.funil = null; activeFilters.escala = null; activeFilters.nicho = null; }
+  else if (type === 'funil') { activeFilters.funil = activeFilters.funil === val ? null : val; activeFilters.nicho = null; }
+  else if (type === 'escala') { activeFilters.escala = activeFilters.escala === val ? null : val; activeFilters.nicho = null; }
+  else if (type === 'nicho') { activeFilters.nicho = activeFilters.nicho === val ? null : val; }
+  document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  var labels = { todos:'Todos os criativos',video:'Videos',image:'Imagens',topo:'Funil — Topo',meio:'Funil — Meio',fundo:'Funil — Fundo',pequeno:'Escala pequena',medio:'Escala media',alto:'Muito escalados' };
+  document.getElementById('page-title').textContent = activeFilters.nicho || labels[val] || 'Criativos';
+  render(); renderNichoNav();
+}
+
+function renderNichoNav() {
+  var nichos = [...new Set(criativos.map(function(c){return c.nicho;}).filter(Boolean))].sort();
+  document.getElementById('nicho-nav').innerHTML = nichos.map(function(n){
+    return '<button class="nav-btn '+(activeFilters.nicho===n?'active':'')+'" onclick="setFilter(\'nicho\',\''+n.replace(/'/g,"\\'")+"',this)\"><span class=\"nav-dot\"></span> "+n+"</button>";
+  }).join('');
+}
+
+function render() {
+  var q = (document.getElementById('searchInput').value || '').toLowerCase();
+  var filtered = criativos.filter(function(c) {
+    if (activeFilters.tipo !== 'todos' && c.tipo !== activeFilters.tipo) return false;
+    if (activeFilters.funil && c.funil !== activeFilters.funil) return false;
+    if (activeFilters.escala && c.escala !== activeFilters.escala) return false;
+    if (activeFilters.nicho && c.nicho !== activeFilters.nicho) return false;
+    if (q && !(c.nicho||'').toLowerCase().includes(q) && !(c.copy||'').toLowerCase().includes(q) && !(c.gancho||'').toLowerCase().includes(q)) return false;
+    return true;
   });
+  document.getElementById('count-badge').textContent = filtered.length + ' criativo' + (filtered.length !== 1 ? 's' : '');
+  var grid = document.getElementById('grid');
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>'+(criativos.length===0?'Nenhum criativo ainda. Adicione o primeiro!':'Nenhum resultado.')+'</p>'+(criativos.length===0?'<button class="add-btn" onclick="openModal()">+ Adicionar criativo</button>':'')+'</div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(function(c) {
+    var escalaLabel = c.escala==='pequeno'?'Pequeno':c.escala==='medio'?'Medio':c.escala==='alto'?'Muito escalado':'';
+    var escalaClass = c.escala ? 'escala-'+c.escala : '';
+    var funilClass = c.funil ? 'tag-'+c.funil : '';
+    var funilLabel = c.funil==='topo'?'Topo':c.funil==='meio'?'Meio':c.funil==='fundo'?'Fundo':'';
+    var tags = [
+      funilLabel ? '<span class="tag '+funilClass+'">'+funilLabel+'</span>' : '',
+      c.formato ? '<span class="tag">'+c.formato+'</span>' : '',
+      c.emocao ? '<span class="tag tag-emocao">'+c.emocao+'</span>' : '',
+      c.plataforma ? '<span class="tag">'+c.plataforma+'</span>' : ''
+    ].filter(Boolean).join('');
+    var meta = [c.duracao?c.duracao+'s':'', c.proporcao||''].filter(Boolean).join(' · ');
+    var driveId = extractDriveId(c.link);
+    var openBtnHTML = driveId
+      ? '<button class="action-btn open-link" onclick="window.open(\'https://drive.google.com/file/d/'+driveId+'/view\',\'_blank\')">Abrir</button>'
+      : '';
+    return '<div class="card">'
+      + '<div class="card-thumb">'
+      + buildThumbHTML(c)
+      + '<span class="type-badge badge-'+c.tipo+'">'+(c.tipo==='video'?'Video':'Imagem')+'</span>'
+      + (escalaLabel ? '<span class="escala-badge '+escalaClass+'">'+escalaLabel+'</span>' : '')
+      + '</div>'
+      + '<div class="card-body">'
+      + '<div class="card-nicho">'+(c.nicho||'—')+'</div>'
+      + (c.gancho ? '<div class="card-gancho">"'+c.gancho+'"</div>' : '')
+      + '<div class="card-copy">'+c.copy+'</div>'
+      + (c.insight ? '<div class="card-insight">'+c.insight+'</div>' : '')
+      + (tags ? '<div class="card-tags">'+tags+'</div>' : '')
+      + (meta ? '<div class="card-meta">'+meta+'</div>' : '')
+      + '<div class="card-actions">'
+      + openBtnHTML
+      + '<button class="action-btn" onclick="editCard('+c.id+')">Editar</button>'
+      + '<button class="action-btn del" onclick="deleteCard('+c.id+')">Excluir</button>'
+      + '</div>'
+      + '</div></div>';
+  }).join('');
+}
+
+function openModal(id) {
+  editingId = id || null;
+  document.getElementById('modal-title').textContent = id ? 'Editar criativo' : 'Novo criativo';
+  var textFields = ['nicho','gancho','copy','cta','link','insight','duracao'];
+  var selFields = ['tipo','plataforma','funil','escala','formato','emocao','proporcao'];
+  if (id) {
+    var c = criativos.find(function(x){return x.id===id;});
+    textFields.forEach(function(f){document.getElementById('f-'+f).value = c[f]||'';});
+    selFields.forEach(function(f){document.getElementById('f-'+f).value = c[f]||'';});
+    previewDrive();
+  } else {
+    textFields.forEach(function(f){document.getElementById('f-'+f).value='';});
+    selFields.forEach(function(f){document.getElementById('f-'+f).value='';});
+    document.getElementById('f-tipo').value = 'video';
+    document.getElementById('drive-preview').style.display = 'none';
+  }
+  document.getElementById('modalOverlay').classList.add('open');
+  setTimeout(function(){document.getElementById('f-nicho').focus();}, 100);
+}
+
+function editCard(id) { openModal(id); }
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+function handleOverlayClick(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+
+function saveCard() {
+  var nicho = document.getElementById('f-nicho').value.trim();
+  var copy = document.getElementById('f-copy').value.trim();
+  if (!nicho || !copy) { showToast('Preencha o nicho e a copy!'); return; }
+  var data = {
+    nicho: nicho, copy: copy,
+    tipo: document.getElementById('f-tipo').value,
+    gancho: document.getElementById('f-gancho').value.trim(),
+    cta: document.getElementById('f-cta').value.trim(),
+    plataforma: document.getElementById('f-plataforma').value,
+    funil: document.getElementById('f-funil').value,
+    escala: document.getElementById('f-escala').value,
+    formato: document.getElementById('f-formato').value,
+    emocao: document.getElementById('f-emocao').value,
+    insight: document.getElementById('f-insight').value.trim(),
+    duracao: document.getElementById('f-duracao').value.trim(),
+    proporcao: document.getElementById('f-proporcao').value,
+    link: document.getElementById('f-link').value.trim()
+  };
+  if (editingId) {
+    var i = criativos.findIndex(function(c){return c.id===editingId;});
+    criativos[i] = Object.assign({id: editingId}, data);
+    showToast('Criativo atualizado!');
+  } else {
+    criativos.unshift(Object.assign({id: Date.now()}, data));
+    showToast('Criativo adicionado!');
+  }
+  saveData(); closeModal(); render(); renderNichoNav();
+}
+
+function deleteCard(id) {
+  if (!confirm('Excluir este criativo?')) return;
+  criativos = criativos.filter(function(c){return c.id!==id;});
+  saveData(); render(); renderNichoNav(); showToast('Excluido.');
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.style.display = 'block';
+  setTimeout(function(){t.style.display='none';}, 2500);
+}
+
+var savedUser = localStorage.getItem(USER_KEY);
+if (savedUser) { currentUser = JSON.parse(savedUser); enterApp(); }
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
 </script>
 </body>
 </html>
