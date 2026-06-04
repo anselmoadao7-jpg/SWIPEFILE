@@ -73,6 +73,8 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
 .type-badge{position:absolute;top:8px;left:8px;font-size:10px;font-family:'DM Mono',monospace;font-weight:500;padding:3px 9px;border-radius:20px;letter-spacing:0.04em;text-transform:uppercase;z-index:2;}
 .badge-video{background:rgba(200,240,96,0.15);color:var(--accent);border:1px solid rgba(200,240,96,0.3);}
 .badge-image{background:rgba(96,184,240,0.15);color:var(--info);border:1px solid rgba(96,184,240,0.3);}
+.badge-vsl{background:rgba(208,150,240,0.15);color:#d096f0;border:1px solid rgba(208,150,240,0.3);}
+.badge-pagina{background:rgba(240,192,96,0.15);color:var(--accent2);border:1px solid rgba(240,192,96,0.3);}
 .escala-badge{position:absolute;top:8px;right:8px;font-size:10px;font-family:'DM Mono',monospace;padding:3px 9px;border-radius:20px;z-index:2;}
 .escala-pequeno{background:rgba(96,240,160,0.15);color:var(--success);border:1px solid rgba(96,240,160,0.25);}
 .escala-medio{background:rgba(240,192,96,0.15);color:var(--accent2);border:1px solid rgba(240,192,96,0.25);}
@@ -160,6 +162,8 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
       <button class="nav-btn active" onclick="setFilter('tipo','todos',this)"><span class="nav-dot"></span> Todos</button>
       <button class="nav-btn" onclick="setFilter('tipo','video',this)"><span class="nav-dot"></span> Video</button>
       <button class="nav-btn" onclick="setFilter('tipo','image',this)"><span class="nav-dot"></span> Imagem</button>
+      <button class="nav-btn" onclick="setFilter('tipo','vsl',this)"><span class="nav-dot"></span> VSL</button>
+      <button class="nav-btn" onclick="setFilter('tipo','pagina',this)"><span class="nav-dot"></span> Pagina de Venda</button>
       <div class="nav-label">Funil</div>
       <button class="nav-btn" onclick="setFilter('funil','topo',this)"><span class="nav-dot"></span> Topo (cold)</button>
       <button class="nav-btn" onclick="setFilter('funil','meio',this)"><span class="nav-dot"></span> Meio</button>
@@ -202,7 +206,7 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
     <div class="modal-section">Informacoes basicas</div>
     <div class="field-row">
       <div class="field"><label>Nicho</label><input type="text" id="f-nicho" placeholder="emagrecimento, financas..." /></div>
-      <div class="field"><label>Tipo</label><select id="f-tipo"><option value="video">Video</option><option value="image">Imagem</option></select></div>
+      <div class="field"><label>Tipo</label><select id="f-tipo"><option value="video">Video</option><option value="image">Imagem</option><option value="vsl">VSL</option><option value="pagina">Pagina de Venda</option></select></div>
     </div>
     <div class="field"><label>Gancho (primeiros 3 segundos)</label><input type="text" id="f-gancho" placeholder="O que aparece logo no inicio..." /></div>
     <div class="field"><label>Copy / Headline</label><textarea id="f-copy" placeholder="Texto principal do anuncio..."></textarea></div>
@@ -217,7 +221,7 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
       <div class="field"><label>Nivel de escala</label><select id="f-escala"><option value="">selecione</option><option value="pequeno">Pequeno</option><option value="medio">Medio</option><option value="alto">Muito escalado</option></select></div>
     </div>
     <div class="field-row">
-      <div class="field"><label>Formato</label><select id="f-formato"><option value="">selecione</option><option value="UGC">UGC</option><option value="Direto ao ponto">Direto ao ponto</option><option value="Storytelling">Storytelling</option><option value="Prova social">Prova social</option><option value="Antes e depois">Antes e depois</option><option value="Educativo">Educativo</option><option value="Polemico">Polemico</option></select></div>
+      <div class="field"><label>Formato</label><select id="f-formato"><option value="">selecione</option><option value="UGC">UGC</option><option value="Direto ao ponto">Direto ao ponto</option><option value="Storytelling">Storytelling</option><option value="Prova social">Prova social</option><option value="Antes e depois">Antes e depois</option><option value="Educativo">Educativo</option><option value="Polemico">Polemico</option><option value="Carta de vendas">Carta de vendas</option><option value="VSL curta">VSL curta</option><option value="VSL longa">VSL longa</option><option value="Hibrido">Hibrido VSL+Carta</option></select></div>
       <div class="field"><label>Emocao principal</label><select id="f-emocao"><option value="">selecione</option><option value="Curiosidade">Curiosidade</option><option value="Medo">Medo</option><option value="Ganancia">Ganancia</option><option value="Urgencia">Urgencia</option><option value="Esperanca">Esperanca</option><option value="Raiva">Raiva</option><option value="Inveja">Inveja</option></select></div>
     </div>
     <div class="field"><label>Por que esse criativo funciona?</label><textarea id="f-insight" placeholder="Seu insight — o que faz esse anuncio escalar..."></textarea></div>
@@ -231,8 +235,8 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
       <label>Link do Google Drive</label>
       <input type="text" id="f-link" placeholder="https://drive.google.com/file/d/ID_DO_ARQUIVO/view" oninput="previewDrive()" />
       <div class="field-hint">
-        Cole o link de compartilhamento do Drive. O preview aparece automaticamente abaixo.<br/>
-        <b>Importante:</b> configure o arquivo como "qualquer pessoa com o link pode ver".
+        Para <b>videos/VSL:</b> cole o link do Drive. Para <b>paginas de venda:</b> cole a URL da pagina ou o link do print no Drive.<br/>
+        <b>Importante:</b> no Drive configure como "qualquer pessoa com o link pode ver".
       </div>
       <div class="drive-preview" id="drive-preview">
         <img id="preview-img" src="" alt="" style="display:none" />
@@ -349,7 +353,7 @@ function setFilter(type, val, btn) {
   else if (type === 'nicho') { activeFilters.nicho = activeFilters.nicho === val ? null : val; }
   document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
   if (btn) btn.classList.add('active');
-  var labels = { todos:'Todos os criativos',video:'Videos',image:'Imagens',topo:'Funil — Topo',meio:'Funil — Meio',fundo:'Funil — Fundo',pequeno:'Escala pequena',medio:'Escala media',alto:'Muito escalados' };
+  var labels = { todos:'Todos os criativos',video:'Videos',image:'Imagens',vsl:'VSLs',pagina:'Paginas de Venda',topo:'Funil — Topo',meio:'Funil — Meio',fundo:'Funil — Fundo',pequeno:'Escala pequena',medio:'Escala media',alto:'Muito escalados' };
   document.getElementById('page-title').textContent = activeFilters.nicho || labels[val] || 'Criativos';
   render(); renderNichoNav();
 }
@@ -396,7 +400,7 @@ function render() {
     return '<div class="card">'
       + '<div class="card-thumb">'
       + buildThumbHTML(c)
-      + '<span class="type-badge badge-'+c.tipo+'">'+(c.tipo==='video'?'Video':'Imagem')+'</span>'
+      + '<span class="type-badge badge-'+c.tipo+'">'+({'video':'Video','image':'Imagem','vsl':'VSL','pagina':'Pag. Venda'}[c.tipo]||c.tipo)+'</span>'
       + (escalaLabel ? '<span class="escala-badge '+escalaClass+'">'+escalaLabel+'</span>' : '')
       + '</div>'
       + '<div class="card-body">'
