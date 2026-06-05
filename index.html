@@ -1146,16 +1146,24 @@ function renderTagsCloud() {
   // Get all unique tags from criativos
   var allTags = new Set(PREDEFINED_TAGS);
   criativos.forEach(function(c){ (c.tags||[]).forEach(function(t){ allTags.add(t); }); });
-  cloud.innerHTML = '<button class="tag-cloud-btn'+(activeTagFilter===null?' active':'')+'" onclick="setTagFilter(null,this)">Todas</button>' +
-    [...allTags].map(function(t){
-      return '<button class="tag-cloud-btn'+(activeTagFilter===t?' active':'')+'" onclick="setTagFilter(''+t.replace(/'/g,"\'")+"',this)">"+t+'</button>';
-    }).join('');
+  var btnsHtml = '<button class="tag-cloud-btn'+(activeTagFilter===null?' active':'')+'" onclick="setTagFilter(null,this)">Todas</button>';
+  [...allTags].forEach(function(t){
+    var safe = t.replace(/"/g,'&quot;');
+    btnsHtml += '<button class="tag-cloud-btn'+(activeTagFilter===t?' active':'')+'" onclick="setTagFilter(this)" data-tag="'+safe+'">'+t+'</button>';
+  });
+  cloud.innerHTML = btnsHtml;
 }
 
-function setTagFilter(tag, btn) {
-  activeTagFilter = tag;
-  document.querySelectorAll('.tag-cloud-btn').forEach(function(b){b.classList.remove('active');});
-  if (btn) btn.classList.add('active');
+function setTagFilter(btnOrNull, tagVal) {
+  if (btnOrNull === null) {
+    activeTagFilter = null;
+    document.querySelectorAll('.tag-cloud-btn').forEach(function(b){b.classList.remove('active');});
+    document.querySelector('.tag-cloud-btn').classList.add('active');
+  } else if (typeof btnOrNull === 'object') {
+    activeTagFilter = btnOrNull.getAttribute('data-tag');
+    document.querySelectorAll('.tag-cloud-btn').forEach(function(b){b.classList.remove('active');});
+    btnOrNull.classList.add('active');
+  }
   render();
 }
 
