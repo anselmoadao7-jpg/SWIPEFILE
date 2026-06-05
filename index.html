@@ -676,22 +676,44 @@ async function logout() {
 async function handleSession(user) {
   if (!user) return;
   currentUser = user;
-  // Get profile
-  var { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).single();
+  
+  // Try to get profile with retries
+  var profile = null;
+  for (var i = 0; i < 3; i++) {
+    var { data, error } = await sb.from('profiles').select('*').eq('id', user.id).single();
+    if (data) { profile = data; break; }
+    await new Promise(r => setTimeout(r, 500));
+  }
+  
+  // If still no profile, create one
   if (!profile) {
-    // Auto-create profile for Google/OAuth users
-    var { count } = await sb.from('profiles').select('*', { count: 'exact', head: true });
-    var isAdmin = (count === 0);
-    var name = user.user_metadata?.name || user.email.split('@')[0];
-    await sb.from('profiles').insert({
-      id: user.id, name, email: user.email,
+    var name = (user.user_metadata && user.user_metadata.name) ? user.user_metadata.name : user.email.split('@')[0];
+    // Check if admin by email
+    var isAdmin = user.email === 'anselmoadao7@gmail.com';
+    var { error: insertError } = await sb.from('profiles').insert({
+      id: user.id, name: name, email: user.email,
       status: isAdmin ? 'approved' : 'pending',
       is_admin: isAdmin
     });
-    var { data: newProfile } = await sb.from('profiles').select('*').eq('id', user.id).single();
-    profile = newProfile;
+    if (!insertError) {
+      var { data: newProfile } = await sb.from('profiles').select('*').eq('id', user.id).single();
+      profile = newProfile;
+    }
   }
-  if (!profile || profile.status === 'pending') {
+
+  // Force approve admin email
+  if (profile && user.email === 'anselmoadao7@gmail.com' && profile.status !== 'approved') {
+    await sb.from('profiles').update({status: 'approved', is_admin: true}).eq('id', user.id);
+    profile.status = 'approved';
+    profile.is_admin = true;
+  }
+
+  if (!profile) {
+    showToast('Erro ao carregar perfil. Tenta novamente.');
+    await sb.auth.signOut();
+    return;
+  }
+  if (profile.status === 'pending') {
     document.getElementById('auth-restricted').style.display='block';
     await sb.auth.signOut();
     return;
