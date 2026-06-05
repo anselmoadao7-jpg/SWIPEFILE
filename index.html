@@ -1094,18 +1094,20 @@ async function renderAdmin() {
   tbody.innerHTML = users.map(function(u){
     var dot = {pending:'dot-pending',approved:'dot-approved',blocked:'dot-blocked'}[u.status]||'dot-pending';
     var label = {pending:'Pendente',approved:'Aprovado',blocked:'Bloqueado'}[u.status]||'Pendente';
-    var btns = u.id===currentUser.id?'<span style="color:var(--muted);font-size:11px">Você</span>':[
-      u.status!=='approved'?'<button class="admin-btn admin-approve" onclick="adminApprove(''+u.id+'')">Aprovar</button>':'',
-      u.status!=='blocked'?'<button class="admin-btn admin-block" onclick="adminBlock(''+u.id+'')">Bloquear</button>':''
-    ].filter(Boolean).join(' ');
+    var isMe = u.id===currentUser.id;
+    var approveBtn = (!isMe && u.status!=='approved') ? '<button class="admin-btn admin-approve" onclick="adminApprove(this)" data-id="'+u.id+'">Aprovar</button>' : '';
+    var blockBtn = (!isMe && u.status!=='blocked') ? '<button class="admin-btn admin-block" onclick="adminBlock(this)" data-id="'+u.id+'">Bloquear</button>' : '';
+    var btns = isMe ? '<span style="color:var(--muted);font-size:11px">Você</span>' : (approveBtn+' '+blockBtn);
     return '<tr><td>'+u.name+'</td><td style="color:var(--muted)">'+u.email+'</td><td><span class="status-dot '+dot+'"></span>'+label+'</td><td>'+btns+'</td></tr>';
   }).join('');
 }
-async function adminApprove(id) {
+async function adminApprove(btn) {
+  var id = btn.getAttribute('data-id');
   await sb.from('profiles').update({status:'approved'}).eq('id', id);
   renderAdmin(); showToast('Usuário aprovado!');
 }
-async function adminBlock(id) {
+async function adminBlock(btn) {
+  var id = btn.getAttribute('data-id');
   await sb.from('profiles').update({status:'blocked'}).eq('id', id);
   renderAdmin(); showToast('Usuário bloqueado.');
 }
