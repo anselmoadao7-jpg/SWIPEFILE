@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>SWIPE FILE — Criativos Escalados</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --bg:#0e0e0f;--surface:#161617;--surface2:#1e1e20;--surface3:#252528;
@@ -588,22 +589,20 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
 
 <script>
 // ============================================================
-// CONFIG
+// SUPABASE CONFIG
 // ============================================================
-var STORAGE_KEY   = 'swipefile_v5';
-var USER_KEY      = 'swipefile_user';
-var USERS_KEY     = 'swipefile_users';
-var COLECOES_KEY  = 'swipefile_colecoes';
-var ADMIN_EMAIL   = ''; // primeiro usuário vira admin
+const SUPABASE_URL  = 'https://rqwddpbjesalxtcefbek.supabase.co';
+const SUPABASE_KEY  = 'sb_publishable_LqC0_NuCxoxxMABiXqXr6g_WWsW7BeO';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 var criativos     = [];
 var colecoes      = [];
-var allUsers      = [];
 var activeFilters = { tipo:'todos', funil:null, escala:null, nicho:null };
 var activeStatus  = 'todos';
 var currentView   = 'biblioteca';
 var editingId     = null;
 var currentUser   = null;
+var currentProfile= null;
 var isListView    = false;
 var presentIndex  = 0;
 var presentList   = [];
@@ -622,93 +621,107 @@ function switchAuthTab(tab) {
   document.getElementById('auth-restricted').style.display='none';
 }
 
-function loginManual() {
+async function loginManual() {
   var email = document.getElementById('login-email').value.trim();
   var pass  = document.getElementById('login-pass').value;
   if (!email || !pass) { showToast('Preencha e-mail e senha.'); return; }
-  loadUsers();
-  var found = allUsers.find(function(u){ return u.email===email && u.pass===btoa(pass); });
-  if (!found) { showToast('E-mail ou senha incorretos.'); return; }
-  if (found.status === 'blocked') { document.getElementById('auth-restricted').style.display='block'; return; }
-  if (found.status === 'pending') { document.getElementById('auth-restricted').style.display='block'; return; }
-  currentUser = found;
-  localStorage.setItem(USER_KEY, JSON.stringify(currentUser));
-  enterApp();
+  showToast('A entrar...');
+  var { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+  if (error) { showToast('E-mail ou senha incorretos.'); return; }
+  await handleSession(data.user);
 }
 
-function registerManual() {
+async function registerManual() {
   var name  = document.getElementById('reg-name').value.trim();
   var email = document.getElementById('reg-email').value.trim();
   var pass  = document.getElementById('reg-pass').value;
   if (!name||!email||!pass) { showToast('Preencha todos os campos.'); return; }
   if (pass.length < 6) { showToast('Senha muito curta.'); return; }
-  loadUsers();
-  if (allUsers.find(function(u){return u.email===email;})) { showToast('E-mail já cadastrado.'); return; }
-  var isFirst = allUsers.length === 0;
-  if (isFirst) ADMIN_EMAIL = email;
-  var user = {
-    id: Date.now(), name: name, email: email, pass: btoa(pass),
-    initials: name.split(' ').map(function(n){return n[0];}).slice(0,2).join('').toUpperCase(),
-    status: isFirst ? 'approved' : 'pending',
-    isAdmin: isFirst
-  };
-  allUsers.push(user);
-  saveUsers();
-  if (!isFirst) {
+  showToast('A criar conta...');
+  var { data, error } = await sb.auth.signUp({ email, password: pass, options: { data: { name } } });
+  if (error) { showToast('Erro: '+error.message); return; }
+  // Check if first user
+  var { count } = await sb.from('profiles').select('*', { count: 'exact', head: true });
+  var isAdmin = (count === 0);
+  var { error: pe } = await sb.from('profiles').insert({
+    id: data.user.id, name, email,
+    status: isAdmin ? 'approved' : 'pending',
+    is_admin: isAdmin
+  });
+  if (!isAdmin) {
     document.getElementById('auth-restricted').style.display='block';
-    showToast('Conta criada! Aguarde aprovação.');
+    showToast('Conta criada! Aguarde aprovação do administrador.');
+    await sb.auth.signOut();
     return;
   }
-  currentUser = user;
-  localStorage.setItem(USER_KEY, JSON.stringify(currentUser));
-  enterApp();
+  await handleSession(data.user);
 }
 
-function loginGoogle() {
-  // Simulated Google login — replace with real Supabase Auth
-  var name = 'Usuário Google';
-  var email = 'google@usuario.com';
-  loadUsers();
-  var found = allUsers.find(function(u){return u.email===email;});
-  if (!found) {
-    var isFirst = allUsers.length === 0;
-    found = {
-      id: Date.now(), name: name, email: email, pass: '',
-      initials: 'G', status: isFirst?'approved':'pending', isAdmin: isFirst
-    };
-    allUsers.push(found);
-    saveUsers();
-  }
-  if (found.status !== 'approved') {
-    document.getElementById('auth-restricted').style.display='block'; return;
-  }
-  currentUser = found;
-  localStorage.setItem(USER_KEY, JSON.stringify(currentUser));
-  enterApp();
+async function loginGoogle() {
+  var { error } = await sb.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.href }
+  });
+  if (error) showToast('Erro ao entrar com Google.');
 }
 
-function logout() {
+async function logout() {
   if (!confirm('Sair?')) return;
-  localStorage.removeItem(USER_KEY);
-  currentUser = null;
+  await sb.auth.signOut();
+  currentUser = null; currentProfile = null;
   document.getElementById('auth-screen').style.display='flex';
   document.getElementById('app').style.display='none';
 }
 
-function loadUsers() { var s=localStorage.getItem(USERS_KEY); allUsers=s?JSON.parse(s):[]; }
-function saveUsers() { localStorage.setItem(USERS_KEY, JSON.stringify(allUsers)); }
+async function handleSession(user) {
+  if (!user) return;
+  currentUser = user;
+  // Get profile
+  var { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).single();
+  if (!profile) {
+    // Auto-create profile for Google/OAuth users
+    var { count } = await sb.from('profiles').select('*', { count: 'exact', head: true });
+    var isAdmin = (count === 0);
+    var name = user.user_metadata?.name || user.email.split('@')[0];
+    await sb.from('profiles').insert({
+      id: user.id, name, email: user.email,
+      status: isAdmin ? 'approved' : 'pending',
+      is_admin: isAdmin
+    });
+    var { data: newProfile } = await sb.from('profiles').select('*').eq('id', user.id).single();
+    profile = newProfile;
+  }
+  if (!profile || profile.status === 'pending') {
+    document.getElementById('auth-restricted').style.display='block';
+    await sb.auth.signOut();
+    return;
+  }
+  if (profile.status === 'blocked') {
+    document.getElementById('auth-restricted').style.display='block';
+    await sb.auth.signOut();
+    return;
+  }
+  currentProfile = profile;
+  enterApp();
+}
 
-function enterApp() {
+async function enterApp() {
   document.getElementById('auth-screen').style.display='none';
   document.getElementById('app').style.display='block';
-  document.getElementById('user-avatar').textContent = currentUser.initials;
-  document.getElementById('user-name-display').textContent = currentUser.name;
-  if (currentUser.isAdmin) document.getElementById('nav-admin').style.display='flex';
-  var saved = localStorage.getItem(STORAGE_KEY+'_'+currentUser.id);
-  criativos = saved ? JSON.parse(saved) : [];
-  var savedC = localStorage.getItem(COLECOES_KEY+'_'+currentUser.id);
-  colecoes = savedC ? JSON.parse(savedC) : [];
+  var name = currentProfile.name || currentUser.email;
+  var initials = name.split(' ').map(function(n){return n[0];}).slice(0,2).join('').toUpperCase();
+  document.getElementById('user-avatar').textContent = initials;
+  document.getElementById('user-name-display').textContent = name;
+  if (currentProfile.is_admin) document.getElementById('nav-admin').style.display='flex';
+  await loadData();
   render(); renderNichoNav(); renderCollections();
+}
+
+async function loadData() {
+  var { data: c } = await sb.from('criativos').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+  criativos = (c||[]).map(mapFromDB);
+  var { data: col } = await sb.from('colecoes').select('*').eq('user_id', currentUser.id);
+  colecoes = col || [];
 }
 
 // ============================================================
@@ -740,14 +753,37 @@ function showView(name, btn, isMobile) {
 }
 
 // ============================================================
-// STORAGE
+// DB MAPPING
 // ============================================================
-function saveData() {
-  localStorage.setItem(STORAGE_KEY+'_'+currentUser.id, JSON.stringify(criativos));
+function mapFromDB(c) {
+  return {
+    id: c.id, nicho: c.nicho, tipo: c.tipo, gancho: c.gancho,
+    copy: c.copy, cta: c.cta, plataforma: c.plataforma, funil: c.funil,
+    escala: c.escala, formato: c.formato, emocao: c.emocao, insight: c.insight,
+    duracao: c.duracao, proporcao: c.proporcao, status: c.status,
+    investimento: c.investimento, hookrate: c.hookrate, diasnoar: c.diasnoar,
+    pais: c.pais, notas: c.notas, link: c.link, linkVsl: c.link_vsl,
+    colecao: c.colecao, tags: c.tags||[], fav: c.fav||false, editedAt: c.edited_at
+  };
 }
-function saveColecoes() {
-  localStorage.setItem(COLECOES_KEY+'_'+currentUser.id, JSON.stringify(colecoes));
+function mapToDB(data) {
+  return {
+    user_id: currentUser.id,
+    nicho: data.nicho, tipo: data.tipo, gancho: data.gancho,
+    copy: data.copy, cta: data.cta, plataforma: data.plataforma, funil: data.funil,
+    escala: data.escala, formato: data.formato, emocao: data.emocao, insight: data.insight,
+    duracao: data.duracao, proporcao: data.proporcao, status: data.status,
+    investimento: data.investimento, hookrate: data.hookrate, diasnoar: data.diasnoar,
+    pais: data.pais, notas: data.notas, link: data.link, link_vsl: data.linkVsl,
+    colecao: data.colecao||null, tags: data.tags||[], fav: data.fav||false, edited_at: data.editedAt
+  };
 }
+
+// ============================================================
+// STORAGE (Supabase)
+// ============================================================
+async function saveData() { /* handled per-operation */ }
+async function saveColecoes() { /* handled per-operation */ }
 
 // ============================================================
 // DRIVE HELPERS
@@ -908,9 +944,12 @@ function buildCardHTML(c) {
 // ============================================================
 // FAVORITOS
 // ============================================================
-function toggleFav(id) {
+async function toggleFav(id) {
   var c = criativos.find(function(x){return x.id===id;});
-  if (c) { c.fav = !c.fav; saveData(); render(); if(currentView==='favoritos')renderFavoritos(); }
+  if (!c) return;
+  c.fav = !c.fav;
+  await sb.from('criativos').update({fav: c.fav}).eq('id', id).eq('user_id', currentUser.id);
+  render(); if(currentView==='favoritos')renderFavoritos();
 }
 function renderFavoritos() {
   var favs = criativos.filter(function(c){return c.fav;});
@@ -978,18 +1017,20 @@ function openCollectionModal(id) {
   document.getElementById('colecaoOverlay').classList.add('open');
 }
 function closeColecaoModal() { document.getElementById('colecaoOverlay').classList.remove('open'); }
-function saveColecao() {
+async function saveColecao() {
   var name = document.getElementById('f-colecao-nome').value.trim();
   if (!name){showToast('Nome obrigatório');return;}
+  var icon = document.getElementById('f-colecao-icon').value.trim()||'📁';
+  var descricao = document.getElementById('f-colecao-desc').value.trim();
   if (editingColecaoId) {
+    await sb.from('colecoes').update({name, icon, descricao}).eq('id', editingColecaoId).eq('user_id', currentUser.id);
     var i=colecoes.findIndex(function(c){return c.id===editingColecaoId;});
-    colecoes[i].name=name;
-    colecoes[i].icon=document.getElementById('f-colecao-icon').value.trim()||'📁';
-    colecoes[i].desc=document.getElementById('f-colecao-desc').value.trim();
+    colecoes[i]={...colecoes[i], name, icon, descricao};
   } else {
-    colecoes.push({id:Date.now(),name:name,icon:document.getElementById('f-colecao-icon').value.trim()||'📁',desc:document.getElementById('f-colecao-desc').value.trim()});
+    var { data: inserted } = await sb.from('colecoes').insert({user_id: currentUser.id, name, icon, descricao}).select().single();
+    if (inserted) colecoes.push(inserted);
   }
-  saveColecoes(); closeColecaoModal(); renderCollections(); showToast('Coleção salva!');
+  closeColecaoModal(); renderCollections(); showToast('Coleção salva!');
 }
 function populateColecaoSelect() {
   var sel=document.getElementById('f-colecao');
@@ -1045,29 +1086,28 @@ function renderDashboard() {
 // ============================================================
 // ADMIN
 // ============================================================
-function renderAdmin() {
-  loadUsers();
+async function renderAdmin() {
   var tbody = document.getElementById('admin-tbody');
   if (!tbody) return;
-  tbody.innerHTML = allUsers.map(function(u){
+  var { data: users } = await sb.from('profiles').select('*').order('created_at');
+  if (!users) return;
+  tbody.innerHTML = users.map(function(u){
     var dot = {pending:'dot-pending',approved:'dot-approved',blocked:'dot-blocked'}[u.status]||'dot-pending';
     var label = {pending:'Pendente',approved:'Aprovado',blocked:'Bloqueado'}[u.status]||'Pendente';
-    var btns = u.email===currentUser.email?'<span style="color:var(--muted);font-size:11px">Você</span>':[
-      u.status!=='approved'?'<button class="admin-btn admin-approve" onclick="adminApprove('+u.id+')">Aprovar</button>':'',
-      u.status!=='blocked'?'<button class="admin-btn admin-block" onclick="adminBlock('+u.id+')">Bloquear</button>':''
+    var btns = u.id===currentUser.id?'<span style="color:var(--muted);font-size:11px">Você</span>':[
+      u.status!=='approved'?'<button class="admin-btn admin-approve" onclick="adminApprove(''+u.id+'')">Aprovar</button>':'',
+      u.status!=='blocked'?'<button class="admin-btn admin-block" onclick="adminBlock(''+u.id+'')">Bloquear</button>':''
     ].filter(Boolean).join(' ');
     return '<tr><td>'+u.name+'</td><td style="color:var(--muted)">'+u.email+'</td><td><span class="status-dot '+dot+'"></span>'+label+'</td><td>'+btns+'</td></tr>';
   }).join('');
 }
-function adminApprove(id) {
-  loadUsers();
-  var u=allUsers.find(function(x){return x.id===id;});
-  if (u){u.status='approved';saveUsers();renderAdmin();showToast('Usuário aprovado!');}
+async function adminApprove(id) {
+  await sb.from('profiles').update({status:'approved'}).eq('id', id);
+  renderAdmin(); showToast('Usuário aprovado!');
 }
-function adminBlock(id) {
-  loadUsers();
-  var u=allUsers.find(function(x){return x.id===id;});
-  if (u){u.status='blocked';saveUsers();renderAdmin();showToast('Usuário bloqueado.');}
+async function adminBlock(id) {
+  await sb.from('profiles').update({status:'blocked'}).eq('id', id);
+  renderAdmin(); showToast('Usuário bloqueado.');
 }
 
 // ============================================================
@@ -1142,7 +1182,7 @@ function editCard(id){openModal(id);}
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
 function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
 
-function saveCard() {
+async function saveCard() {
   var nicho=document.getElementById('f-nicho').value.trim();
   var copy=document.getElementById('f-copy').value.trim();
   if (!nicho||!copy){showToast('Preencha o nicho e a copy!');return;}
@@ -1169,31 +1209,41 @@ function saveCard() {
     linkVsl:document.getElementById('f-link-vsl').value.trim(),
     colecao:document.getElementById('f-colecao').value||null,
     tags:[...customTags],
+    fav: editingId ? criativos.find(function(c){return c.id===editingId;})?.fav||false : false,
     editedAt:new Date().toLocaleDateString('pt-BR')
   };
   if (editingId) {
+    var { error } = await sb.from('criativos').update(mapToDB(data)).eq('id', editingId).eq('user_id', currentUser.id);
+    if (error) { showToast('Erro ao guardar: '+error.message); return; }
     var i=criativos.findIndex(function(c){return c.id===editingId;});
-    criativos[i]=Object.assign({id:editingId,fav:criativos[i].fav},data);
+    criativos[i]=Object.assign({id:editingId},data);
     showToast('Criativo atualizado!');
   } else {
-    criativos.unshift(Object.assign({id:Date.now(),fav:false},data));
+    var { data: inserted, error } = await sb.from('criativos').insert(mapToDB(data)).select().single();
+    if (error) { showToast('Erro ao guardar: '+error.message); return; }
+    criativos.unshift(mapFromDB(inserted));
     showToast('Criativo adicionado!');
   }
-  saveData(); closeModal(); render(); renderNichoNav();
+  closeModal(); render(); renderNichoNav();
 }
 
-function deleteCard(id) {
+async function deleteCard(id) {
   if (!confirm('Excluir este criativo?')) return;
+  var { error } = await sb.from('criativos').delete().eq('id', id).eq('user_id', currentUser.id);
+  if (error) { showToast('Erro ao excluir.'); return; }
   criativos=criativos.filter(function(c){return c.id!==id;});
-  saveData(); render(); renderNichoNav(); showToast('Excluído.');
+  render(); renderNichoNav(); showToast('Excluído.');
 }
 
-function duplicarCard(id) {
+async function duplicarCard(id) {
   var c=criativos.find(function(x){return x.id===id;});
   if (!c) return;
-  var clone=Object.assign({},c,{id:Date.now(),fav:false,editedAt:new Date().toLocaleDateString('pt-BR'),copy:'[Cópia] '+c.copy});
-  criativos.unshift(clone);
-  saveData(); render(); showToast('Criativo duplicado!');
+  var clone=Object.assign({},c,{fav:false,editedAt:new Date().toLocaleDateString('pt-BR'),copy:'[Cópia] '+c.copy});
+  delete clone.id;
+  var { data: inserted, error } = await sb.from('criativos').insert(mapToDB(clone)).select().single();
+  if (error) { showToast('Erro ao duplicar.'); return; }
+  criativos.unshift(mapFromDB(inserted));
+  render(); showToast('Criativo duplicado!');
 }
 
 // ============================================================
@@ -1251,7 +1301,8 @@ async function analisarCardComIA(id) {
     if (parsed.emocao) criativos[i].emocao=parsed.emocao;
     if (parsed.formato) criativos[i].formato=parsed.formato;
     if (parsed.insight) criativos[i].insight=parsed.insight;
-    saveData(); render();
+    await sb.from('criativos').update({emocao:criativos[i].emocao,formato:criativos[i].formato,insight:criativos[i].insight}).eq('id',id).eq('user_id',currentUser.id);
+    render();
     showToast('✨ Criativo atualizado pela IA!');
   } catch(e) {
     showToast('Erro na análise IA.');
@@ -1351,9 +1402,16 @@ document.addEventListener('keydown',function(e){
   }
 });
 
-// Init
-var savedUser=localStorage.getItem(USER_KEY);
-if (savedUser){currentUser=JSON.parse(savedUser);enterApp();}
+// Init — check Supabase session
+sb.auth.getSession().then(function(result) {
+  var session = result.data.session;
+  if (session && session.user) {
+    handleSession(session.user);
+  }
+});
+sb.auth.onAuthStateChange(function(event, session) {
+  if (event === 'SIGNED_IN' && session) handleSession(session.user);
+});
 </script>
 </body>
 </html>
