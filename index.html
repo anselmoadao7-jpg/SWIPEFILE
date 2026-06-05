@@ -152,6 +152,54 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
 .action-btn.open-link:hover{border-color:rgba(96,184,240,.3);background:rgba(96,184,240,.08);}
 .action-btn.present-btn:hover{color:var(--purple);border-color:rgba(208,150,240,.3);background:rgba(208,150,240,.08);}
 .empty-state{grid-column:1/-1;text-align:center;padding:4rem 1rem;color:var(--muted);}
+/* ===== SCALE METRICS ===== */
+.scale-metric{display:flex;align-items:center;gap:4px;font-size:10px;font-family:'DM Mono',monospace;padding:2px 8px;border-radius:20px;border:1px solid var(--border);}
+.scale-test{background:rgba(96,184,240,.1);color:var(--info);border-color:rgba(96,184,240,.3);}
+.scale-validated{background:rgba(240,192,96,.1);color:var(--accent2);border-color:rgba(240,192,96,.3);}
+.scale-scaled{background:rgba(240,96,96,.1);color:var(--danger);border-color:rgba(240,96,96,.3);}
+.scale-money1{background:rgba(96,240,160,.1);color:var(--success);border-color:rgba(96,240,160,.3);}
+.scale-money2{background:rgba(200,240,96,.1);color:var(--accent);border-color:rgba(200,240,96,.3);}
+.scale-money3{background:rgba(240,96,96,.1);color:var(--danger);border-color:rgba(240,96,96,.3);}
+/* ===== WHY ESCALATED ===== */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;}
+.why-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-xs);padding:7px 9px;}
+.why-label{font-size:9px;font-family:'DM Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;}
+.why-val{font-size:11px;color:var(--text);line-height:1.4;}
+/* ===== GLOBAL SEARCH ===== */
+.global-search-wrap{position:relative;width:100%;}
+.global-search{width:100%;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:12px 16px 12px 40px;color:var(--text);font-family:'Syne',sans-serif;font-size:14px;transition:all .2s;}
+.global-search:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(200,240,96,.08);}
+.global-search::placeholder{color:var(--muted);}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none;}
+.search-results-count{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);margin-top:6px;margin-bottom:12px;}
+/* ===== PRESET TAGS ===== */
+.preset-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;}
+.preset-tag{padding:3px 10px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;transition:all .15s;}
+.preset-tag:hover{background:var(--surface2);color:var(--text);}
+.preset-tag.selected{background:rgba(200,240,96,.1);border-color:rgba(200,240,96,.3);color:var(--accent);}
+/* ===== PLAN BADGES ===== */
+.plan-badge{font-size:9px;font-family:'DM Mono',monospace;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;}
+.plan-free{background:rgba(136,135,132,.15);color:var(--muted);border:1px solid var(--border);}
+.plan-monthly{background:rgba(96,184,240,.15);color:var(--info);border:1px solid rgba(96,184,240,.3);}
+.plan-lifetime{background:rgba(200,240,96,.15);color:var(--accent);border:1px solid rgba(200,240,96,.3);}
+/* ESCALA MONEY */
+.money-badge{position:absolute;bottom:8px;left:8px;z-index:3;font-size:11px;background:rgba(0,0,0,.6);border-radius:20px;padding:2px 8px;backdrop-filter:blur(4px);}
+/* PREMIUM BADGE */
+.premium-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-family:'DM Mono',monospace;padding:2px 8px;border-radius:20px;background:rgba(240,192,96,.15);color:var(--accent2);border:1px solid rgba(240,192,96,.3);}
+/* ESCALA TAGS */
+.escala-tag-verde{color:#60f0a0;} .escala-tag-amarelo{color:#f0c060;} .escala-tag-vermelho{color:#f06060;}
+/* PLAN CARDS */
+.plan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:1rem;}
+.plan-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;}
+.plan-card.featured{border-color:rgba(200,240,96,.4);background:rgba(200,240,96,.04);}
+.plan-price{font-size:28px;font-weight:800;color:var(--accent);margin:.5rem 0;}
+.plan-name{font-size:13px;font-weight:700;margin-bottom:.25rem;}
+.plan-desc{font-size:11px;color:var(--muted);margin-bottom:1rem;}
+/* PORQUÊ ESCALOU */
+.insight-section{background:var(--surface2);border-radius:var(--radius-xs);padding:10px 12px;margin-top:7px;border-left:2px solid var(--accent2);}
+.insight-row{display:flex;gap:6px;margin-bottom:4px;font-size:11px;}
+.insight-label{color:var(--accent2);font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;width:80px;flex-shrink:0;padding-top:1px;}
+.insight-val{color:var(--muted);flex:1;}
 .empty-icon{font-size:44px;margin-bottom:.875rem;}
 
 /* ===== MODAL ===== */
@@ -277,6 +325,39 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
   .present-info{width:100%;border-left:none;border-top:1px solid #222;}
 }
 
+/* ===== SCALE METRIC ===== */
+.scale-money{font-size:11px;font-family:'DM Mono',monospace;letter-spacing:.05em;}
+.scale-1{color:#60f0a0;}
+.scale-2{color:#f0c060;}
+.scale-3{color:#f06060;}
+
+/* ===== TAGS CLOUD ===== */
+.tags-cloud{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem;}
+.tag-cloud-btn{padding:4px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;transition:all .15s;}
+.tag-cloud-btn:hover{background:var(--surface2);color:var(--text);}
+.tag-cloud-btn.active{border-color:rgba(200,240,96,.4);background:rgba(200,240,96,.08);color:var(--accent);}
+
+/* ===== PREMIUM BADGE ===== */
+.premium-badge{font-size:9px;font-family:'DM Mono',monospace;padding:2px 7px;border-radius:20px;background:rgba(240,192,96,.15);color:var(--accent2);border:1px solid rgba(240,192,96,.3);margin-left:6px;}
+.plan-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;transition:all .2s;}
+.plan-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.plan-card.featured{border-color:rgba(200,240,96,.4);background:rgba(200,240,96,.04);}
+.plan-price{font-size:32px;font-weight:800;color:var(--accent);letter-spacing:-.03em;margin:8px 0;}
+.plan-period{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);}
+.plan-features{list-style:none;margin:1rem 0;display:flex;flex-direction:column;gap:6px;text-align:left;}
+.plan-features li{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.plan-features li::before{content:'✓';color:var(--accent);font-weight:700;}
+.plan-btn{width:100%;padding:10px;border-radius:var(--radius-sm);border:none;background:var(--accent);color:#0e0e0f;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;margin-top:8px;}
+.plan-btn:hover{background:#d9ff70;}
+.plan-btn.outline{background:transparent;border:1px solid var(--border2);color:var(--text);}
+.plan-btn.outline:hover{background:var(--surface2);}
+
+/* ===== POR QUE ESCALOU ===== */
+.escalou-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px;}
+.escalou-item{background:var(--surface2);border-radius:var(--radius-xs);padding:8px 10px;border:1px solid var(--border);}
+.escalou-label{font-size:9px;font-family:'DM Mono',monospace;color:var(--accent2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;}
+.escalou-val{font-size:12px;color:var(--text);}
+
 /* MOBILE NAV */
 .mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:8px 0;z-index:100;justify-content:space-around;}
 @media(max-width:640px){.mobile-nav{display:flex;}}
@@ -333,6 +414,8 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
       <button class="nav-btn" id="nav-colecoes" onclick="showView('colecoes',this)"><span class="nav-dot"></span> 📁 Coleções</button>
       <button class="nav-btn" id="nav-dashboard" onclick="showView('dashboard',this)"><span class="nav-dot"></span> 📊 Dashboard</button>
       <button class="nav-btn" id="nav-admin" onclick="showView('admin',this)" style="display:none"><span class="nav-dot"></span> ⚙️ Admin <span class="nav-badge" id="admin-badge" style="display:none">0</span></button>
+      <button class="nav-btn" id="nav-premium" onclick="showView('premium',this)"><span class="nav-dot"></span> 💎 Planos</button>
+      <button class="nav-btn" id="nav-premium" onclick="showView('premium',this)" style="display:none"><span class="nav-dot"></span> 💎 Planos & Acesso</button>
 
       <div class="nav-label">Tipo</div>
       <button class="nav-btn" onclick="setFilter('tipo','todos',this)"><span class="nav-dot"></span> Todos</button>
@@ -383,6 +466,7 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
           <button class="status-pill" onclick="setStatusFilter('Referência',this)">Referência</button>
           <button class="status-pill" onclick="setStatusFilter('Morto',this)">Morto</button>
         </div>
+        <div class="tags-cloud" id="tags-cloud"></div>
         <div class="grid" id="grid"></div>
       </div>
 
@@ -409,6 +493,63 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
         <div class="topbar"><div class="page-title">📊 Dashboard</div></div>
         <div class="dash-grid" id="dash-stats"></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" id="dash-charts"></div>
+      </div>
+
+      <!-- PREMIUM VIEW -->
+      <div id="premium-view" style="display:none">
+        <div class="topbar"><div class="page-title">💎 Planos de Acesso</div></div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:1.5rem;">Quando quiseres monetizar a tua biblioteca, activa um dos planos abaixo. O admin aprova cada membro manualmente.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:2rem;">
+          <div class="plan-card">
+            <div style="font-size:22px">🌱</div>
+            <div style="font-size:14px;font-weight:700;margin-top:6px;">Gratuito</div>
+            <div class="plan-price">$0</div>
+            <div class="plan-period">para sempre</div>
+            <ul class="plan-features">
+              <li>Acesso limitado</li>
+              <li>Ver criativos públicos</li>
+              <li>Sem análise IA</li>
+            </ul>
+            <button class="plan-btn outline">Plano actual</button>
+          </div>
+          <div class="plan-card featured">
+            <div style="font-size:22px">🚀</div>
+            <div style="font-size:14px;font-weight:700;margin-top:6px;">Pro Mensal <span class="premium-badge">POPULAR</span></div>
+            <div class="plan-price">$29</div>
+            <div class="plan-period">por mês</div>
+            <ul class="plan-features">
+              <li>Criativos ilimitados</li>
+              <li>Análise IA incluída</li>
+              <li>Dashboard completo</li>
+              <li>Coleções ilimitadas</li>
+              <li>Suporte prioritário</li>
+            </ul>
+            <button class="plan-btn" onclick="showToast('Em breve! Contacta o admin.')">Assinar agora</button>
+          </div>
+          <div class="plan-card">
+            <div style="font-size:22px">👑</div>
+            <div style="font-size:14px;font-weight:700;margin-top:6px;">Vitalício</div>
+            <div class="plan-price">$197</div>
+            <div class="plan-period">pagamento único</div>
+            <ul class="plan-features">
+              <li>Tudo do plano Pro</li>
+              <li>Acesso para sempre</li>
+              <li>Actualizações grátis</li>
+              <li>Acesso antecipado</li>
+              <li>Badge exclusivo</li>
+            </ul>
+            <button class="plan-btn" onclick="showToast('Em breve! Contacta o admin.')">Comprar acesso</button>
+          </div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;">
+          <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;">Como funciona</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;">
+            <div style="font-size:12px;color:var(--muted);line-height:1.6;">1️⃣ Utilizador solicita acesso</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.6;">2️⃣ Admin recebe notificação</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.6;">3️⃣ Admin aprova manualmente</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.6;">4️⃣ Utilizador acede à biblioteca</div>
+          </div>
+        </div>
       </div>
 
       <!-- ADMIN VIEW -->
@@ -470,6 +611,17 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
       </select></div>
     </div>
 
+    <div class="modal-section">Por que escalou?</div>
+    <div class="field-row">
+      <div class="field"><label>Hook</label><input type="text" id="f-hook-why" placeholder="O que prende a atenção..." /></div>
+      <div class="field"><label>Mecanismo</label><input type="text" id="f-mecanismo" placeholder="Como funciona o produto..." /></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Promessa</label><input type="text" id="f-promessa" placeholder="Resultado prometido..." /></div>
+      <div class="field"><label>Público</label><input type="text" id="f-publico" placeholder="Quem é o avatar..." /></div>
+    </div>
+    <div class="field"><label>Observações</label><textarea id="f-obs" placeholder="Outras observações sobre o criativo..."></textarea></div>
+
     <div class="modal-section">Análise</div>
     <div class="field-row">
       <div class="field"><label>Fase do funil</label><select id="f-funil">
@@ -504,11 +656,29 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
         <option value="">selecione</option><option value="9:16">9:16 (vertical)</option>
         <option value="1:1">1:1 (quadrado)</option><option value="16:9">16:9 (horizontal)</option>
       </select></div>
+      <div class="field"><label>💰 Métrica de escala</label><select id="f-metrica">
+        <option value="">selecione</option>
+        <option value="teste">🟢 Em teste</option>
+        <option value="validado">🟡 Validado</option>
+        <option value="escalado">🔴 Muito escalado</option>
+        <option value="1k">💰 &lt;1k USD/dia</option>
+        <option value="10k">💰💰 1k–10k USD/dia</option>
+        <option value="100k">💰💰💰 10k+ USD/dia</option>
+      </select></div>
       <div class="field"><label>Invest. estimado</label><select id="f-investimento">
         <option value="">selecione</option><option value="Pequeno">Pequeno</option>
         <option value="Médio">Médio</option><option value="Alto">Alto</option>
       </select></div>
     </div>
+    <div class="field"><label>💰 Métrica de escala</label><select id="f-money-scale">
+      <option value="">selecione</option>
+      <option value="teste">🟢 Em Teste</option>
+      <option value="validado">🟡 Validado</option>
+      <option value="escalado">🔴 Muito Escalado</option>
+      <option value="menos1k">💰 Menos de 1k USD/dia</option>
+      <option value="1k10k">💰💰 1k–10k USD/dia</option>
+      <option value="mais10k">💰💰💰 10k+ USD/dia</option>
+    </select></div>
     <div class="field-row">
       <div class="field"><label>Hook rate (%)</label><input type="number" id="f-hookrate" placeholder="ex: 35" min="0" max="100" /></div>
       <div class="field"><label>Tempo no ar (dias)</label><input type="number" id="f-diasnoar" placeholder="ex: 14" /></div>
@@ -518,6 +688,16 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
         <input class="tags-input" id="tags-input-field" placeholder="Adicionar tag..." onkeydown="handleTagInput(event)" />
       </div>
     </div>
+    <div class="modal-section">Por que escalou? 🔥</div>
+    <div class="field-row">
+      <div class="field"><label>Hook</label><input type="text" id="f-pq-hook" placeholder="O que prende a atenção..." /></div>
+      <div class="field"><label>Mecanismo</label><input type="text" id="f-pq-mecanismo" placeholder="O que torna único..." /></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Promessa</label><input type="text" id="f-pq-promessa" placeholder="O que promete..." /></div>
+      <div class="field"><label>Público</label><input type="text" id="f-pq-publico" placeholder="Para quem é..." /></div>
+    </div>
+    <div class="field"><label>Observações</label><textarea id="f-pq-obs" placeholder="Outras observações..."></textarea></div>
     <div class="field"><label>Notas rápidas</label><textarea id="f-notas" placeholder="Anotações livres..."></textarea></div>
 
     <div class="modal-section">Mídia — Criativo (Drive)</div>
@@ -566,6 +746,45 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeColecaoModal()">Cancelar</button>
       <button class="btn-save" onclick="saveColecao()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- PREMIUM VIEW -->
+<div id="premium-view" style="display:none">
+  <div class="topbar"><div class="page-title">💎 Planos & Acesso Premium</div></div>
+  <div style="background:rgba(200,240,96,.06);border:1px solid rgba(200,240,96,.2);border-radius:var(--radius);padding:1.25rem;margin-bottom:1.25rem;">
+    <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:.5rem;">🚀 Monetiza a tua biblioteca</div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.7;">Vende acesso à tua swipe file como produto. Define planos, aprova membros manualmente e controla quem vê os teus criativos.</div>
+  </div>
+  <div class="plan-grid" id="plan-grid"></div>
+  <div style="margin-top:1.5rem;">
+    <div class="topbar"><div class="page-title" style="font-size:15px;">👥 Membros com acesso</div><button class="add-btn" onclick="openPlanModal()">+ Novo plano</button></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:.75rem;">
+      <table class="admin-table" id="members-table">
+        <thead><tr><th>Nome</th><th>E-mail</th><th>Plano</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody id="members-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PLANO -->
+<div class="modal-overlay" id="planOverlay" onclick="if(event.target===this)closePlanModal()">
+  <div class="modal" style="width:420px;">
+    <div class="modal-header">
+      <div class="modal-title">Novo Plano</div>
+      <button class="close-btn" onclick="closePlanModal()">✕</button>
+    </div>
+    <div class="field"><label>Nome do plano</label><input type="text" id="f-plan-name" placeholder="ex: Mensal, Vitalício..." /></div>
+    <div class="field"><label>Preço</label><input type="text" id="f-plan-price" placeholder="ex: 47 USD / mês" /></div>
+    <div class="field"><label>Descrição</label><textarea id="f-plan-desc" placeholder="O que está incluído..."></textarea></div>
+    <div class="field"><label>Destaque</label><select id="f-plan-featured">
+      <option value="false">Normal</option><option value="true">⭐ Destaque</option>
+    </select></div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closePlanModal()">Cancelar</button>
+      <button class="btn-save" onclick="savePlan()">Salvar</button>
     </div>
   </div>
 </div>
@@ -735,7 +954,10 @@ async function enterApp() {
   var initials = name.split(' ').map(function(n){return n[0];}).slice(0,2).join('').toUpperCase();
   document.getElementById('user-avatar').textContent = initials;
   document.getElementById('user-name-display').textContent = name;
-  if (currentProfile.is_admin) document.getElementById('nav-admin').style.display='flex';
+  if (currentProfile.is_admin) {
+    document.getElementById('nav-admin').style.display='flex';
+    document.getElementById('nav-premium').style.display='flex';
+  }
   await loadData();
   render(); renderNichoNav(); renderCollections();
   if (currentProfile.is_admin) updateAdminBadge();
@@ -761,7 +983,7 @@ async function loadData() {
 // ============================================================
 // VIEWS
 // ============================================================
-var views = ['biblioteca','favoritos','colecoes','dashboard','admin'];
+var views = ['biblioteca','favoritos','colecoes','dashboard','admin','premium'];
 function showView(name, btn, isMobile) {
   currentView = name;
   views.forEach(function(v){
@@ -784,6 +1006,7 @@ function showView(name, btn, isMobile) {
   if (name==='favoritos') renderFavoritos();
   if (name==='colecoes') renderCollections();
   if (name==='biblioteca') render();
+  if (name==='premium') renderPremium();
 }
 
 // ============================================================
@@ -797,7 +1020,10 @@ function mapFromDB(c) {
     duracao: c.duracao, proporcao: c.proporcao, status: c.status,
     investimento: c.investimento, hookrate: c.hookrate, diasnoar: c.diasnoar,
     pais: c.pais, notas: c.notas, link: c.link, linkVsl: c.link_vsl,
-    colecao: c.colecao, tags: c.tags||[], fav: c.fav||false, editedAt: c.edited_at
+    colecao: c.colecao, tags: c.tags||[], fav: c.fav||false, editedAt: c.edited_at,
+    hookWhy: c.hook_why||'', mecanismo: c.mecanismo||'',
+    promessa: c.promessa||'', publico: c.publico||'',
+    obs: c.obs||'', metrica: c.metrica||''
   };
 }
 function mapToDB(data) {
@@ -809,7 +1035,10 @@ function mapToDB(data) {
     duracao: data.duracao, proporcao: data.proporcao, status: data.status,
     investimento: data.investimento, hookrate: data.hookrate, diasnoar: data.diasnoar,
     pais: data.pais, notas: data.notas, link: data.link, link_vsl: data.linkVsl,
-    colecao: data.colecao||null, tags: data.tags||[], fav: data.fav||false, edited_at: data.editedAt
+    colecao: data.colecao||null, tags: data.tags||[], fav: data.fav||false, edited_at: data.editedAt,
+    hook_why: data.hookWhy||null, mecanismo: data.mecanismo||null,
+    promessa: data.promessa||null, publico: data.publico||null,
+    obs: data.obs||null, metrica: data.metrica||null
   };
 }
 
@@ -908,6 +1137,28 @@ function removeTag(i) { customTags.splice(i,1); renderTagChips(); }
 // ============================================================
 // RENDER CARD GRID
 // ============================================================
+var PREDEFINED_TAGS = ['Emagrecimento','Diabetes','Relacionamento','Ganhar Dinheiro','Saúde Masculina','Angola','Brasil','Finanças','Beleza','Fitness','Suplementos','Imóveis','Cursos','SaaS'];
+var activeTagFilter = null;
+
+function renderTagsCloud() {
+  var cloud = document.getElementById('tags-cloud');
+  if (!cloud) return;
+  // Get all unique tags from criativos
+  var allTags = new Set(PREDEFINED_TAGS);
+  criativos.forEach(function(c){ (c.tags||[]).forEach(function(t){ allTags.add(t); }); });
+  cloud.innerHTML = '<button class="tag-cloud-btn'+(activeTagFilter===null?' active':'')+'" onclick="setTagFilter(null,this)">Todas</button>' +
+    [...allTags].map(function(t){
+      return '<button class="tag-cloud-btn'+(activeTagFilter===t?' active':'')+'" onclick="setTagFilter(''+t.replace(/'/g,"\'")+"',this)">"+t+'</button>';
+    }).join('');
+}
+
+function setTagFilter(tag, btn) {
+  activeTagFilter = tag;
+  document.querySelectorAll('.tag-cloud-btn').forEach(function(b){b.classList.remove('active');});
+  if (btn) btn.classList.add('active');
+  render();
+}
+
 function render() {
   var q = (document.getElementById('searchInput')?document.getElementById('searchInput').value||'':'').toLowerCase();
   var filtered = criativos.filter(function(c) {
@@ -916,11 +1167,13 @@ function render() {
     if (activeFilters.escala&&c.escala!==activeFilters.escala) return false;
     if (activeFilters.nicho&&c.nicho!==activeFilters.nicho) return false;
     if (activeStatus!=='todos'&&c.status!==activeStatus) return false;
-    if (q&&!(c.nicho||'').toLowerCase().includes(q)&&!(c.copy||'').toLowerCase().includes(q)&&!(c.gancho||'').toLowerCase().includes(q)&&!(c.tags||[]).join(' ').toLowerCase().includes(q)) return false;
+    if (q&&!(c.nicho||'').toLowerCase().includes(q)&&!(c.copy||'').toLowerCase().includes(q)&&!(c.gancho||'').toLowerCase().includes(q)&&!(c.tags||[]).join(' ').toLowerCase().includes(q)&&!(c.promessa||'').toLowerCase().includes(q)&&!(c.publico||'').toLowerCase().includes(q)) return false;
+    if (activeTagFilter && !(c.tags||[]).includes(activeTagFilter) && (c.nicho||'')!==activeTagFilter) return false;
     return true;
   });
   var badge = document.getElementById('count-badge');
   if (badge) badge.textContent = filtered.length+' criativo'+(filtered.length!==1?'s':'');
+  renderTagsCloud();
   var grid = document.getElementById('grid');
   if (!grid) return;
   if (!filtered.length) {
@@ -963,8 +1216,16 @@ function buildCardHTML(c) {
     (c.gancho?'<div class="card-gancho">"'+c.gancho+'"</div>':'')+
     '<div class="card-copy">'+c.copy+'</div>'+
     (c.insight?'<div class="card-insight">'+c.insight+'</div>':'')+
+    (c.metrica?'<div style="font-size:11px;font-family:DM Mono,monospace;margin-bottom:5px;">'+{teste:'🟢 Em teste',validado:'🟡 Validado',escalado:'🔴 Muito escalado','1k':'💰 <1k USD/dia','10k':'💰💰 1k–10k USD/dia','100k':'💰💰💰 10k+ USD/dia'}[c.metrica]+' </div>':'')+
     ((tagsHTML||customTagsHTML)?'<div class="card-tags">'+tagsHTML+customTagsHTML+'</div>':'')+
     (meta?'<div class="card-meta">'+meta+'</div>':'')+
+    (c.moneyScale?'<div class="card-meta" style="margin-top:2px">'+({teste:'🟢 Em Teste',validado:'🟡 Validado',escalado:'🔴 Muito Escalado','menos1k':'💰 <1k/dia','1k10k':'💰💰 1k-10k/dia','mais10k':'💰💰💰 10k+/dia'}[c.moneyScale]||c.moneyScale)+'</div>':'')+
+    ((c.pqHook||c.pqPromessa)?'<div class="insight-section">'+
+      (c.pqHook?'<div class="insight-row"><span class="insight-label">Hook</span><span class="insight-val">'+c.pqHook+'</span></div>':'')+
+      (c.pqMecanismo?'<div class="insight-row"><span class="insight-label">Mecanismo</span><span class="insight-val">'+c.pqMecanismo+'</span></div>':'')+
+      (c.pqPromessa?'<div class="insight-row"><span class="insight-label">Promessa</span><span class="insight-val">'+c.pqPromessa+'</span></div>':'')+
+      (c.pqPublico?'<div class="insight-row"><span class="insight-label">Público</span><span class="insight-val">'+c.pqPublico+'</span></div>':'')+
+    '</div>':'')+
     '<div class="card-actions">'+
     openBtn+vslBtn+
     '<button class="action-btn present-btn" onclick="openPresent('+c.id+')" title="Modo apresentação">📽</button>'+
@@ -1199,6 +1460,12 @@ function openModal(id) {
     document.getElementById('f-pais').value=c.pais||'';
     document.getElementById('f-notas').value=c.notas||'';
     document.getElementById('f-colecao').value=c.colecao||'';
+    document.getElementById('f-money-scale').value=c.moneyScale||'';
+    document.getElementById('f-pq-hook').value=c.pqHook||'';
+    document.getElementById('f-pq-mecanismo').value=c.pqMecanismo||'';
+    document.getElementById('f-pq-promessa').value=c.pqPromessa||'';
+    document.getElementById('f-pq-publico').value=c.pqPublico||'';
+    document.getElementById('f-pq-obs').value=c.pqObs||'';
     customTags=c.tags?[...c.tags]:[];
     renderTagChips();
     previewDrive(); previewVSL();
@@ -1241,8 +1508,20 @@ async function saveCard() {
     diasnoar:document.getElementById('f-diasnoar').value.trim(),
     pais:document.getElementById('f-pais').value.trim(),
     notas:document.getElementById('f-notas').value.trim(),
+    moneyScale:document.getElementById('f-money-scale').value,
+    pqHook:document.getElementById('f-pq-hook').value.trim(),
+    pqMecanismo:document.getElementById('f-pq-mecanismo').value.trim(),
+    pqPromessa:document.getElementById('f-pq-promessa').value.trim(),
+    pqPublico:document.getElementById('f-pq-publico').value.trim(),
+    pqObs:document.getElementById('f-pq-obs').value.trim(),
     link:document.getElementById('f-link').value.trim(),
     linkVsl:document.getElementById('f-link-vsl').value.trim(),
+    hookWhy:document.getElementById('f-hook-why').value.trim(),
+    mecanismo:document.getElementById('f-mecanismo').value.trim(),
+    promessa:document.getElementById('f-promessa').value.trim(),
+    publico:document.getElementById('f-publico').value.trim(),
+    obs:document.getElementById('f-obs').value.trim(),
+    metrica:document.getElementById('f-metrica').value,
     colecao:document.getElementById('f-colecao').value||null,
     tags:[...customTags],
     fav: editingId ? criativos.find(function(c){return c.id===editingId;})?.fav||false : false,
@@ -1437,6 +1716,57 @@ document.addEventListener('keydown',function(e){
     if (e.key==='ArrowLeft'||e.key==='ArrowUp') presentNav(-1);
   }
 });
+
+// ============================================================
+// PREMIUM & PLANS
+// ============================================================
+var plans = JSON.parse(localStorage.getItem('swipefile_plans')||'[]');
+
+function renderPremium() {
+  var grid = document.getElementById('plan-grid');
+  if (!grid) return;
+  grid.innerHTML = plans.length ? plans.map(function(p,i){
+    return '<div class="plan-card'+(p.featured?' featured':'')+'">'+
+      '<div class="plan-name">'+(p.featured?'⭐ ':'')+p.name+'</div>'+
+      '<div class="plan-price">'+p.price+'</div>'+
+      '<div class="plan-desc">'+p.desc+'</div>'+
+      '<button class="enter-btn" style="font-size:12px;padding:8px" onclick="copyPlanLink('+i+')">📋 Copiar link de acesso</button>'+
+      '</div>';
+  }).join('') : '<div style="color:var(--muted);font-size:13px;grid-column:1/-1">Nenhum plano criado ainda. Clica em "+ Novo plano" para começar.</div>';
+  
+  var tbody = document.getElementById('members-tbody');
+  if (!tbody) return;
+  sb.from('profiles').select('*').order('created_at').then(function(r){
+    var users = r.data || [];
+    tbody.innerHTML = users.map(function(u){
+      var statusClass = {approved:'tag-status-escalando',pending:'tag-status-em-teste',blocked:'tag-status-morto'}[u.status]||'';
+      var statusLabel = {approved:'Aprovado',pending:'Pendente',blocked:'Bloqueado'}[u.status]||u.status;
+      var isMe = u.id === currentUser.id;
+      var btns = isMe ? '<span style="color:var(--muted);font-size:11px">Você (Admin)</span>' : [
+        u.status!=='approved'?'<button class="admin-btn admin-approve" onclick="adminApprove(this)" data-id="'+u.id+'">Aprovar</button>':'',
+        u.status!=='blocked'?'<button class="admin-btn admin-block" onclick="adminBlock(this)" data-id="'+u.id+'">Bloquear</button>':''
+      ].filter(Boolean).join(' ');
+      return '<tr><td>'+u.name+'</td><td style="color:var(--muted)">'+u.email+'</td><td><span class="tag">'+( u.plan||'—')+'</span></td><td><span class="tag '+statusClass+'">'+statusLabel+'</span></td><td>'+btns+'</td></tr>';
+    }).join('');
+  });
+}
+
+function openPlanModal() { document.getElementById('planOverlay').classList.add('open'); }
+function closePlanModal() { document.getElementById('planOverlay').classList.remove('open'); }
+function savePlan() {
+  var name = document.getElementById('f-plan-name').value.trim();
+  var price = document.getElementById('f-plan-price').value.trim();
+  var desc = document.getElementById('f-plan-desc').value.trim();
+  var featured = document.getElementById('f-plan-featured').value === 'true';
+  if (!name||!price) { showToast('Preencha nome e preço!'); return; }
+  plans.push({name,price,desc,featured});
+  localStorage.setItem('swipefile_plans', JSON.stringify(plans));
+  closePlanModal(); renderPremium(); showToast('Plano criado!');
+}
+function copyPlanLink(i) {
+  navigator.clipboard.writeText(window.location.origin+'?plano='+plans[i].name);
+  showToast('Link copiado!');
+}
 
 // Init — check Supabase session
 sb.auth.getSession().then(function(result) {
