@@ -434,6 +434,13 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
       <button class="nav-btn" onclick="setFilter('escala','medio',this)"><span class="nav-dot"></span> Médio</button>
       <button class="nav-btn" onclick="setFilter('escala','alto',this)"><span class="nav-dot"></span> Muito escalado</button>
 
+      <div class="nav-label">Status</div>
+      <button class="nav-btn" onclick="setStatusFilter('todos',this)"><span class="nav-dot"></span> Todos</button>
+      <button class="nav-btn" onclick="setStatusFilter('Em teste',this)"><span class="nav-dot"></span> Em teste</button>
+      <button class="nav-btn" onclick="setStatusFilter('Escalando',this)"><span class="nav-dot"></span> Escalando</button>
+      <button class="nav-btn" onclick="setStatusFilter('Referência',this)"><span class="nav-dot"></span> Referência</button>
+      <button class="nav-btn" onclick="setStatusFilter('Morto',this)"><span class="nav-dot"></span> Morto</button>
+
       <div class="nav-label">Nichos</div>
       <div id="nicho-nav"></div>
 
@@ -459,14 +466,8 @@ body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;font-s
           <button class="icon-btn" id="view-toggle-btn" title="Alternar visualização" onclick="toggleView()">⊞</button>
           <button class="add-btn" onclick="openModal()">+ Adicionar</button>
         </div>
-        <div class="status-filters" id="status-filters">
-          <button class="status-pill active" onclick="setStatusFilter('todos',this)">Todos</button>
-          <button class="status-pill" onclick="setStatusFilter('Em teste',this)">Em teste</button>
-          <button class="status-pill" onclick="setStatusFilter('Escalando',this)">Escalando</button>
-          <button class="status-pill" onclick="setStatusFilter('Referência',this)">Referência</button>
-          <button class="status-pill" onclick="setStatusFilter('Morto',this)">Morto</button>
-        </div>
-        <div class="tags-cloud" id="tags-cloud"></div>
+
+        
         <div class="grid" id="grid"></div>
       </div>
 
